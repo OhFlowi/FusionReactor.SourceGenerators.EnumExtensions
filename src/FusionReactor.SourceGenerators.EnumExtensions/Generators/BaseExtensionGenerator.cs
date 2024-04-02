@@ -43,6 +43,8 @@ public static class BaseExtensionGenerator
 
              using System;
              using System.CodeDom.Compiler;
+             using System.Collections;
+             using System.Collections.Generic;
              using System.Collections.ObjectModel;
 
              namespace {{node.Namespace}};

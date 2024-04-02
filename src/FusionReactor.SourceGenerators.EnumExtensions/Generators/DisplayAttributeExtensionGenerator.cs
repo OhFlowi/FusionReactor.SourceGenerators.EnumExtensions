@@ -39,7 +39,10 @@ public static class DisplayAttributeExtensionGenerator
              #nullable enable
 
              using System;
+             using System.Collections;
+             using System.Collections.Generic;
              using System.Collections.ObjectModel;
+             using FusionReactor.SourceGenerators.EnumExtensions;
 
              namespace {{node.Namespace}};
 
