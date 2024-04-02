@@ -3,9 +3,8 @@
 [![Nuget](https://img.shields.io/nuget/vpre/FusionReactor.SourceGenerators.EnumExtensions.svg?label=NuGet)](https://www.nuget.org/packages/FusionReactor.SourceGenerators.EnumExtensions)
 
 # FusionReactor.SourceGenerators.EnumExtensions
-# The best Source Generator for working with enums in C#
 A C# source generator to create extensions for an enum type.
-The extensions should be very fast and without reflections.
+The extensions are optimized for speed and low resource consumption.
 
 **Package** - [FusionReactor.SourceGenerators.EnumExtensions](https://www.nuget.org/packages/FusionReactor.SourceGenerators.EnumExtensions/)
 
@@ -46,100 +45,73 @@ public enum EPublicFoo
 
 ```
 
-This will generate a class called `EPublicFooExtensions` (`EPublicFoo` + `Extensions`), which contains a number of helper methods.
-For example:
+This will generate a class called `EPublicFooExtensions` (`EPublicFoo` + `Extensions`), which contains a number of helper methods. The new class is splitted in two files (`EPublicFoo` + `Extensions.Base.g.cs` & `EPublicFoo` + `Extensions.DisplayAttribute.g.cs`)
+
+`EPublicFooExtensions.Base.g.cs`:
 
 ```csharp
-
 /// <summary>
 /// Extension methods for the <see cref = "EPublicFoo"/> enum.
 /// </summary>
-public static class EPublicFooExtensions
+[GeneratedCode("FusionReactor.SourceGenerators.EnumExtensions", null)]
+public static partial class EPublicFooExtensions
 {
-    /// <summary>
-    /// Returns the count of elements in the <see cref = "EPublicFoo"/> enum.
-    /// </summary>
-    /// <param name = "enumValue">The enum value.</param>
-    /// <returns>The count of elements.</returns>
-    public static uint Count(this EPublicFoo enumValue)
+    private static readonly IDictionary<EPublicFoo, Int32> contentDictionary = new Dictionary<EPublicFoo, Int32>
     {
-        return 3;
-    }
-
-    /// <summary>
-    /// Retrieves all available Names of the specified public enumeration type.
-    /// </summary>
-    /// <param name = "enumValue">The enumeration value.</param>
-    /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> Names.</returns>
-    public static IEnumerable<string> Names(this EPublicFoo enumValue)
-    {
-        return new[]
-        {
-            "Foo",
-            "Bar",
-            "Batz",
-        };
-    }
-
-    /// <summary>
-    /// Retrieves all available values of the specified public enumeration type.
-    /// </summary>
-    /// <param name = "enumValue">The enumeration value.</param>
-    /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
-    public static IEnumerable<EPublicFoo> Values(this EPublicFoo enumValue)
-    {
-        return new[]
         {
             EPublicFoo.Foo,
+            0
+        },
+        {
             EPublicFoo.Bar,
+            1
+        },
+        {
             EPublicFoo.Batz,
-        };
-    }
-
-    /// <summary>
-    /// Determines whether the specified string representation of an enum type contains a valid value of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The enum value.</param>
-    /// <param name = "stringValue">The string representation of the enum value to check.</param>
-    /// <returns>
-    ///   <c>true</c> if the specified string value is a valid value of the <see cref = "EPublicFoo"/> enumeration; otherwise, <c>false</c>.
-    /// </returns>
-    public static bool Contains(this EPublicFoo enumValue, string stringValue)
+            2
+        },
+    };
+    private static readonly IReadOnlyDictionary<EPublicFoo, Int32> content = new ReadOnlyDictionary<EPublicFoo, Int32>(contentDictionary);
+    private static readonly IEnumerable<string> names = new[]
     {
-        return stringValue switch
-        {
-            nameof(EPublicFoo.Foo) => true,
-            nameof(EPublicFoo.Bar) => true,
-            nameof(EPublicFoo.Batz) => true,
-            _ => false
-        };
-    }
-
-    /// <summary>
-    /// Checks whether the <see cref = "EPublicFoo"/> contains the given <see cref = "System.Enum"/> value.
-    /// </summary>
-    /// <param name = "enumValue">The enum value to check.</param>
-    /// <param name = "value">The Enum value to search for.</param>
-    /// <returns>True if the enum contains the specified value; otherwise, false.</returns>
-    public static bool Contains(this EPublicFoo enumValue, Enum value)
+        "Foo",
+        "Bar",
+        "Batz",
+    };
+    private static readonly IEnumerable<EPublicFoo> values = new[]
     {
-        return value switch
-        {
-            EPublicFoo.Foo => true,
-            EPublicFoo.Bar => true,
-            EPublicFoo.Batz => true,
-            _ => false
-        };
+        EPublicFoo.Foo,
+        EPublicFoo.Bar,
+        EPublicFoo.Batz,
+    };
+    /// <summary>
+    /// Gets the content dictionary containing mappings of <see cref = "EPublicFoo"/> enum values to values.
+    /// </summary>
+    /// <returns>The read-only content dictionary.</returns>
+    public static IReadOnlyDictionary<EPublicFoo, Int32> GetContent()
+    {
+        return content;
     }
 
     /// <summary>
-    /// Converts the specified <see cref = "EPublicFoo"/> enum value to its corresponding string representation quickly.
+    /// Gets the content dictionary containing mappings of <see cref = "EPublicFoo"/> enum values to values.
+    /// </summary>
+    /// <param name = "enumValue">The enum value for which to get the content dictionary.</param>
+    /// <returns>The read-only content dictionary.</returns>
+    public static IReadOnlyDictionary<EPublicFoo, Int32> GetContent(this EPublicFoo enumValue)
+    {
+        return content;
+    }
+
+    /// <summary>
+    /// Retrieves the name of the constant in the <see cref = "EPublicFoo"/>.
     /// </summary>
     /// <param name = "enumValue">The enum value to convert.</param>
     /// <returns>
-    /// The string representation of the enum value if it is one of the defined enum values; otherwise, <c>null</c>.
+    /// A string containing the name of the <see cref = "EPublicFoo"/>;
+    /// or <see langword="null"/> if no such constant is found.
     /// </returns>
-    public static string? ToStringFast(this EPublicFoo enumValue)
+    public static string? GetName(this EPublicFoo enumValue)
     {
         return enumValue switch
         {
@@ -149,6 +121,261 @@ public static class EPublicFooExtensions
             _ => null
         };
     }
+
+    /// <summary>
+    /// Retrieves all available names of the <see cref = "EPublicFoo"/>.
+    /// </summary>
+    /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> names.</returns>
+    public static IEnumerable<string> GetNames()
+    {
+        return names;
+    }
+
+    /// <summary>
+    /// Retrieves all available names of the <see cref = "EPublicFoo"/>.
+    /// </summary>
+    /// <param name = "enumValue">The enumeration value.</param>
+    /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> names.</returns>
+    public static IEnumerable<string> GetNames(this EPublicFoo enumValue)
+    {
+        return names;
+    }
+
+    /// <summary>
+    /// Retrieves all available values of the <see cref = "EPublicFoo"/>.
+    /// </summary>
+    /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
+    public static IEnumerable<EPublicFoo> GetValues()
+    {
+        return values;
+    }
+
+    /// <summary>
+    /// Retrieves all available values of the <see cref = "EPublicFoo"/>.
+    /// </summary>
+    /// <param name = "enumValue">The enumeration value.</param>
+    /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
+    public static IEnumerable<EPublicFoo> GetValues(this EPublicFoo enumValue)
+    {
+        return values;
+    }
+
+    /// <summary>
+    /// Parses the specified string representation of the enumeration value to its corresponding
+    /// <see cref = "EPublicFoo"/> value.
+    /// </summary>
+    /// <param name = "value">A string containing the name or value to convert.</param>
+    /// <param name = "ignoreCase">
+    /// A boolean indicating whether to ignore case during the parsing. Default is <c>false</c>.
+    /// </param>
+    /// <returns>
+    /// The <see cref = "EPublicFoo"/> value equivalent to the specified string representation.
+    /// </returns>
+    public static EPublicFoo Parse(string value, bool ignoreCase = false)
+    {
+        if (ignoreCase)
+        {
+            return value.ToLowerInvariant() switch
+            {
+                "foo" => EPublicFoo.Foo,
+                "bar" => EPublicFoo.Bar,
+                "batz" => EPublicFoo.Batz,
+                _ => throw new ArgumentException(),
+            };
+        }
+        else
+        {
+            return value switch
+            {
+                "Foo" => EPublicFoo.Foo,
+                "Bar" => EPublicFoo.Bar,
+                "Batz" => EPublicFoo.Batz,
+                _ => throw new ArgumentException(),
+            };
+        }
+    }
+
+    /// <summary>
+    /// Parses the specified string representation of the enumeration value to its corresponding
+    /// <see cref = "EPublicFoo"/> value.
+    /// </summary>
+    /// <param name = "enumValue">The current <see cref = "EPublicFoo"/> value.</param>
+    /// <param name = "value">A string containing the name or value to convert.</param>
+    /// <param name = "ignoreCase">
+    /// A boolean indicating whether to ignore case during the parsing. Default is <c>false</c>.
+    /// </param>
+    /// <returns>
+    /// The <see cref = "EPublicFoo"/> value equivalent to the specified string representation.
+    /// </returns>
+    public static EPublicFoo Parse(this EPublicFoo enumValue, string value, bool ignoreCase = false)
+    {
+        if (ignoreCase)
+        {
+            return value.ToLowerInvariant() switch
+            {
+                "foo" => EPublicFoo.Foo,
+                "bar" => EPublicFoo.Bar,
+                "batz" => EPublicFoo.Batz,
+                _ => throw new ArgumentException(),
+            };
+        }
+        else
+        {
+            return value switch
+            {
+                "Foo" => EPublicFoo.Foo,
+                "Bar" => EPublicFoo.Bar,
+                "Batz" => EPublicFoo.Batz,
+                _ => throw new ArgumentException(),
+            };
+        }
+    }
+
+    /// <summary>
+    /// Tries to parse the specified string representation of an enumeration value to its corresponding
+    /// <see cref = "EPublicFoo"/> enumeration value.
+    /// </summary>
+    /// <param name = "value">The string representation of the enumeration value.</param>
+    /// <param name = "result">
+    /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
+    /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
+    /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+    public static bool TryParse(string value, out EPublicFoo? result)
+    {
+        return TryParse(value, false, out result);
+    }
+
+    /// <summary>
+    /// Tries to parse the specified string representation of an enumeration value to its corresponding
+    /// <see cref = "EPublicFoo"/> enumeration value.
+    /// </summary>
+    /// <param name = "value">The string representation of the enumeration value.</param>
+    /// <param name = "ignoreCase">A boolean indicating whether case should be ignored when parsing.</param>
+    /// <param name = "result">
+    /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
+    /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
+    /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+    public static bool TryParse(string value, bool ignoreCase, out EPublicFoo? result)
+    {
+        if (ignoreCase)
+        {
+            result = value.ToLowerInvariant() switch
+            {
+                "foo" => EPublicFoo.Foo,
+                "bar" => EPublicFoo.Bar,
+                "batz" => EPublicFoo.Batz,
+                _ => null,
+            };
+        }
+        else
+        {
+            result = value switch
+            {
+                "Foo" => EPublicFoo.Foo,
+                "Bar" => EPublicFoo.Bar,
+                "Batz" => EPublicFoo.Batz,
+                _ => null,
+            };
+        }
+
+        return result != null;
+    }
+
+    /// <summary>
+    /// Tries to parse the specified string representation of an enumeration value to its corresponding
+    /// <see cref = "EPublicFoo"/> enumeration value.
+    /// </summary>
+    /// <param name = "enumValue">The enumeration value to parse.</param>
+    /// <param name = "value">The string representation of the enumeration value.</param>
+    /// <param name = "result">
+    /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
+    /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
+    /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+    public static bool TryParse(this EPublicFoo enumValue, string value, out EPublicFoo? result)
+    {
+        return TryParse(value, false, out result);
+    }
+
+    /// <summary>
+    /// Tries to parse the specified string representation of an enumeration value to its corresponding
+    /// <see cref = "EPublicFoo"/> enumeration value.
+    /// </summary>
+    /// <param name = "enumValue">The enumeration value to parse.</param>
+    /// <param name = "value">The string representation of the enumeration value.</param>
+    /// <param name = "ignoreCase">A boolean indicating whether case should be ignored when parsing.</param>
+    /// <param name = "result">
+    /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
+    /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
+    /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+    public static bool TryParse(this EPublicFoo enumValue, string value, bool ignoreCase, out EPublicFoo? result)
+    {
+        if (ignoreCase)
+        {
+            result = value.ToLowerInvariant() switch
+            {
+                "foo" => EPublicFoo.Foo,
+                "bar" => EPublicFoo.Bar,
+                "batz" => EPublicFoo.Batz,
+                _ => null,
+            };
+        }
+        else
+        {
+            result = value switch
+            {
+                "Foo" => EPublicFoo.Foo,
+                "Bar" => EPublicFoo.Bar,
+                "Batz" => EPublicFoo.Batz,
+                _ => null,
+            };
+        }
+
+        return result != null;
+    }
+}
+```
+
+`EPublicFooExtensions.DisplayAttribute.g.cs`:
+```csharp
+public static partial class EPublicFooExtensions
+{
+    private static readonly IDictionary<EPublicFoo, DisplayResult?> displayResultDictionary = new Dictionary<EPublicFoo, DisplayResult?>
+    {
+        {
+            EPublicFoo.Foo,
+            new DisplayResult
+            {
+                ShortName = "Fo",
+                Name = "Foo - 0",
+                Description = "Zero",
+                Prompt = "ooF",
+                GroupName = "Foos",
+                Order = 0,
+            }
+        },
+        {
+            EPublicFoo.Bar,
+            new DisplayResult
+            {
+                ShortName = "Ba",
+                Name = "Bar - 1",
+                Description = "One",
+                Prompt = "raB",
+                GroupName = "Bars",
+                Order = 1,
+            }
+        },
+        {
+            EPublicFoo.Batz,
+            null
+        },
+    };
+    /// <summary>
+    /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref = "EPublicFoo"/> enum.
+    /// </summary>
+    /// <param name = "enumValue">The enum value.</param>
+    /// <returns>The display attribute result or the enum value.</returns>
+    public static IReadOnlyDictionary<EPublicFoo, DisplayResult?> DisplayResults => new ReadOnlyDictionary<EPublicFoo, DisplayResult?>(displayResultDictionary);
 
     /// <summary>
     /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName"/> of the <see cref = "EPublicFoo"/> enum.
@@ -245,68 +472,9 @@ public static class EPublicFooExtensions
             _ => null
         };
     }
-
-    /// <summary>
-    /// Generates a read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName"/> corresponding to values of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The value of the <see cref = "EPublicFoo"/> enumeration.</param>
-    /// <returns>A read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName"/> for each value of the <see cref = "EPublicFoo"/> enumeration.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, string> DisplayShortNameDictionary(this EPublicFoo enumValue)
-    {
-        return new ReadOnlyDictionary<EPublicFoo, string>(new Dictionary<EPublicFoo, string> { { EPublicFoo.Foo, "Fo" }, { EPublicFoo.Bar, "Ba" }, });
-    }
-
-    /// <summary>
-    /// Generates a read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Name"/> corresponding to values of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The value of the <see cref = "EPublicFoo"/> enumeration.</param>
-    /// <returns>A read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Name"/> for each value of the <see cref = "EPublicFoo"/> enumeration.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, string> DisplayNameDictionary(this EPublicFoo enumValue)
-    {
-        return new ReadOnlyDictionary<EPublicFoo, string>(new Dictionary<EPublicFoo, string> { { EPublicFoo.Foo, "Foo - 0" }, { EPublicFoo.Bar, "Bar - 1" }, });
-    }
-
-    /// <summary>
-    /// Generates a read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Description"/> corresponding to values of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The value of the <see cref = "EPublicFoo"/> enumeration.</param>
-    /// <returns>A read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Description"/> for each value of the <see cref = "EPublicFoo"/> enumeration.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, string> DisplayDescriptionDictionary(this EPublicFoo enumValue)
-    {
-        return new ReadOnlyDictionary<EPublicFoo, string>(new Dictionary<EPublicFoo, string> { { EPublicFoo.Foo, "Zero" }, { EPublicFoo.Bar, "One" }, });
-    }
-
-    /// <summary>
-    /// Generates a read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt"/> corresponding to values of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The value of the <see cref = "EPublicFoo"/> enumeration.</param>
-    /// <returns>A read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Prompt"/> for each value of the <see cref = "EPublicFoo"/> enumeration.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, string> DisplayPromptDictionary(this EPublicFoo enumValue)
-    {
-        return new ReadOnlyDictionary<EPublicFoo, string>(new Dictionary<EPublicFoo, string> { { EPublicFoo.Foo, "ooF" }, { EPublicFoo.Bar, "raB" }, });
-    }
-
-    /// <summary>
-    /// Generates a read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName"/> corresponding to values of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The value of the <see cref = "EPublicFoo"/> enumeration.</param>
-    /// <returns>A read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.GroupName"/> for each value of the <see cref = "EPublicFoo"/> enumeration.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, string> DisplayGroupNameDictionary(this EPublicFoo enumValue)
-    {
-        return new ReadOnlyDictionary<EPublicFoo, string>(new Dictionary<EPublicFoo, string> { { EPublicFoo.Foo, "Foos" }, { EPublicFoo.Bar, "Bars" }, });
-    }
-
-    /// <summary>
-    /// Generates a read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Order"/> corresponding to values of the <see cref = "EPublicFoo"/> enumeration.
-    /// </summary>
-    /// <param name = "enumValue">The value of the <see cref = "EPublicFoo"/> enumeration.</param>
-    /// <returns>A read-only dictionary containing <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.Order"/> for each value of the <see cref = "EPublicFoo"/> enumeration.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, int> DisplayOrderDictionary(this EPublicFoo enumValue)
-    {
-        return new ReadOnlyDictionary<EPublicFoo, int>(new Dictionary<EPublicFoo, int> { { EPublicFoo.Foo, 0 }, { EPublicFoo.Bar, 1 }, });
-    }
 }
 ```
+
 
 The generated extension files are available in your IDE under the Source Generators files.
 
@@ -322,4 +490,4 @@ Create an [issue](https://github.com/OhFlowi/FusionReactor.SourceGenerators.Enum
 
 ## License
 
-FusionReactor.SourceGenerators.EnumExtensions is Copyright © 2024 [OhFlowi](https://github.com/OhFlowi) under the MIT License.
+FusionReactor.SourceGenerators.EnumExtensions is Copyright Â© 2024 [OhFlowi](https://github.com/OhFlowi) under the MIT License.
