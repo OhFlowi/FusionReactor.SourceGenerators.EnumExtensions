@@ -82,7 +82,6 @@ public class PropertyDisplayResultStrategy : IExtensionGeneratorStrategy
               /// <summary>
               /// Returns the <see cref="System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref="{{enumDeclarationSyntax.Name}}"/> enum.
               /// </summary>
-              /// <param name="enumValue">The enum value.</param>
               /// <returns>The display attribute result or the enum value.</returns>
               public static IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?> DisplayResults
                 => new ReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>(displayResultDictionary);
