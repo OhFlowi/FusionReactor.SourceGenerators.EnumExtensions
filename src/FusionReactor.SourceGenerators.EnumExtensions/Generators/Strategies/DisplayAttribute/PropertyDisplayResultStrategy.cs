@@ -25,7 +25,7 @@ public class PropertyDisplayResultStrategy : IExtensionGeneratorStrategy
             {
                 if (!member.Attributes.Any(x => x.AttributeClass is { Name: "DisplayAttribute" }))
                 {
-                    stringBuilder.AppendLine($"{{ {enumDeclarationSyntax.Name}.{member.Name}, null }}");
+                    stringBuilder.AppendLine($"{{ {enumDeclarationSyntax.Name}.{member.Name}, null }},");
 
                     continue;
                 }
@@ -73,17 +73,19 @@ public class PropertyDisplayResultStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
+              private static readonly IDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?> displayResultDictionary
+                = new Dictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>
+                  {
+                      {{stringBuilder}}
+                  };
+
               /// <summary>
               /// Returns the <see cref="System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref="{{enumDeclarationSyntax.Name}}"/> enum.
               /// </summary>
               /// <param name="enumValue">The enum value.</param>
               /// <returns>The display attribute result or the enum value.</returns>
               public static IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?> DisplayResults
-                => new ReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>(
-                  new Dictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>
-                  {
-                      {{stringBuilder}}
-                  });
+                => new ReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>(displayResultDictionary);
               """;
     }
 }
