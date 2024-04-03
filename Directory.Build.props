@@ -33,9 +33,9 @@
       enumfast enum-fast csharp-sourcegenerator
     </PackageTags>
 
-    <Version>1.0.6</Version>
-    <PackageVersion>1.0.6</PackageVersion>
-    <AssemblyVersion>1.0.6</AssemblyVersion>
+    <Version>1.0.7</Version>
+    <PackageVersion>1.0.7</PackageVersion>
+    <AssemblyVersion>1.0.7</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/OhFlowi/FusionReactor.SourceGenerators.EnumExtensions/releases</PackageReleaseNotes>
 
 
