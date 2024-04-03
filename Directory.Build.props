@@ -33,14 +33,14 @@
       enumfast enum-fast csharp-sourcegenerator
     </PackageTags>
 
-    <Version>1.0.8</Version>
-    <PackageVersion>1.0.8</PackageVersion>
-    <AssemblyVersion>1.0.8</AssemblyVersion>
+    <Version>1.0.9</Version>
+    <PackageVersion>1.0.9</PackageVersion>
+    <AssemblyVersion>1.0.9</AssemblyVersion>
     <PackageReleaseNotes>https://github.com/OhFlowi/FusionReactor.SourceGenerators.EnumExtensions/releases</PackageReleaseNotes>
 
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/EngRajabi/FusionReactor.SourceGenerators.EnumExtensions</RepositoryUrl>
+    <RepositoryUrl>https://github.com/OhFlowi/FusionReactor.SourceGenerators.EnumExtensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
