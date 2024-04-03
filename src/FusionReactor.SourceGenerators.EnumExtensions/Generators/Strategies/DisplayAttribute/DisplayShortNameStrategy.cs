@@ -25,7 +25,7 @@ public class DisplayShortNameStrategy : IExtensionGeneratorStrategy
             {
                 if (!member.ExtractStringValue("ShortName", out var value))
                 {
-                    stringBuilder.AppendLine($"{enumDeclarationSyntax.Name}.{member.Name} => \"{member.Name}\",");
+                    stringBuilder.AppendLine($"{enumDeclarationSyntax.Name}.{member.Name} => null,");
 
                     continue;
                 }
