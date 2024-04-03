@@ -32,7 +32,7 @@ public class GetValuesStrategy : IExtensionGeneratorStrategy
               /// Retrieves all available values of the <see cref="{{enumDeclarationSyntax.Name}}"/>.
               /// </summary>
               /// <returns>An enumerable collection of <see cref="{{enumDeclarationSyntax.Name}}"/> values.</returns>
-              public static IEnumerable<{{enumDeclarationSyntax.Name}}> GetValues()
+              public static FrozenSet<{{enumDeclarationSyntax.Name}}> GetValues()
               {
                 return values;
               }
@@ -42,7 +42,7 @@ public class GetValuesStrategy : IExtensionGeneratorStrategy
               /// </summary>
               /// <param name="enumValue">The enumeration value.</param>
               /// <returns>An enumerable collection of <see cref="{{enumDeclarationSyntax.Name}}"/> values.</returns>
-              public static IEnumerable<{{enumDeclarationSyntax.Name}}> GetValues(this {{enumDeclarationSyntax.Name}} enumValue)
+              public static FrozenSet<{{enumDeclarationSyntax.Name}}> GetValues(this {{enumDeclarationSyntax.Name}} enumValue)
               {
                 return values;
               }

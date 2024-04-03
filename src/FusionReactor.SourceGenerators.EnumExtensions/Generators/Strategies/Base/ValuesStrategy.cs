@@ -28,10 +28,11 @@ public class ValuesStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
-              private static readonly IEnumerable<{{enumDeclarationSyntax.Name}}> values = new[]
+              private static readonly FrozenSet<{{enumDeclarationSyntax.Name}}> values = new[]
               {
                 {{stringBuilder}}
-              };
+              }
+              .ToFrozenSet();
 
               """;
     }
