@@ -28,10 +28,11 @@ public class NamesStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
-               private static readonly IEnumerable<string> names = new []
+               private static readonly FrozenSet<string> names = new []
                {
                    {{stringBuilder}}
-               };
+               }
+               .ToFrozenSet();
 
                """;
     }

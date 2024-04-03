@@ -18,7 +18,7 @@ public class GetNamesStrategy : IExtensionGeneratorStrategy
                /// Retrieves all available names of the <see cref="{{enumDeclarationSyntax.Name}}"/>.
                /// </summary>
                /// <returns>An enumerable collection of <see cref="{{enumDeclarationSyntax.Name}}"/> names.</returns>
-               public static IEnumerable<string> GetNames()
+               public static FrozenSet<string> GetNames()
                {
                  return names;
                }
@@ -28,7 +28,7 @@ public class GetNamesStrategy : IExtensionGeneratorStrategy
                /// </summary>
                /// <param name="enumValue">The enumeration value.</param>
                /// <returns>An enumerable collection of <see cref="{{enumDeclarationSyntax.Name}}"/> names.</returns>
-               public static IEnumerable<string> GetNames(this {{enumDeclarationSyntax.Name}} enumValue)
+               public static FrozenSet<string> GetNames(this {{enumDeclarationSyntax.Name}} enumValue)
                {
                  return names;
                }
