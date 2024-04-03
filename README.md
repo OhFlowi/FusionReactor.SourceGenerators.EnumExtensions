@@ -56,7 +56,7 @@ This will generate a class called `EPublicFooExtensions` (`EPublicFoo` + `Extens
 [GeneratedCode("FusionReactor.SourceGenerators.EnumExtensions", null)]
 public static partial class EPublicFooExtensions
 {
-    private static readonly IDictionary<EPublicFoo, Int32> contentDictionary = new Dictionary<EPublicFoo, Int32>
+    private static readonly FrozenDictionary<EPublicFoo, Int32> content = new Dictionary<EPublicFoo, Int32>
     {
         {
             EPublicFoo.Foo,
@@ -70,25 +70,24 @@ public static partial class EPublicFooExtensions
             EPublicFoo.Batz,
             2
         },
-    };
-    private static readonly IReadOnlyDictionary<EPublicFoo, Int32> content = new ReadOnlyDictionary<EPublicFoo, Int32>(contentDictionary);
-    private static readonly IEnumerable<string> names = new[]
+    }.ToFrozenDictionary();
+    private static readonly FrozenSet<string> names = new[]
     {
         "Foo",
         "Bar",
         "Batz",
-    };
-    private static readonly IEnumerable<EPublicFoo> values = new[]
+    }.ToFrozenSet();
+    private static readonly FrozenSet<EPublicFoo> values = new[]
     {
         EPublicFoo.Foo,
         EPublicFoo.Bar,
         EPublicFoo.Batz,
-    };
+    }.ToFrozenSet();
     /// <summary>
     /// Gets the content dictionary containing mappings of <see cref = "EPublicFoo"/> enum values to values.
     /// </summary>
     /// <returns>The read-only content dictionary.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, Int32> GetContent()
+    public static FrozenDictionary<EPublicFoo, Int32> GetContent()
     {
         return content;
     }
@@ -98,7 +97,7 @@ public static partial class EPublicFooExtensions
     /// </summary>
     /// <param name = "enumValue">The enum value for which to get the content dictionary.</param>
     /// <returns>The read-only content dictionary.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, Int32> GetContent(this EPublicFoo enumValue)
+    public static FrozenDictionary<EPublicFoo, Int32> GetContent(this EPublicFoo enumValue)
     {
         return content;
     }
@@ -126,7 +125,7 @@ public static partial class EPublicFooExtensions
     /// Retrieves all available names of the <see cref = "EPublicFoo"/>.
     /// </summary>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> names.</returns>
-    public static IEnumerable<string> GetNames()
+    public static FrozenSet<string> GetNames()
     {
         return names;
     }
@@ -136,7 +135,7 @@ public static partial class EPublicFooExtensions
     /// </summary>
     /// <param name = "enumValue">The enumeration value.</param>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> names.</returns>
-    public static IEnumerable<string> GetNames(this EPublicFoo enumValue)
+    public static FrozenSet<string> GetNames(this EPublicFoo enumValue)
     {
         return names;
     }
@@ -145,7 +144,7 @@ public static partial class EPublicFooExtensions
     /// Retrieves all available values of the <see cref = "EPublicFoo"/>.
     /// </summary>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
-    public static IEnumerable<EPublicFoo> GetValues()
+    public static FrozenSet<EPublicFoo> GetValues()
     {
         return values;
     }
@@ -155,7 +154,7 @@ public static partial class EPublicFooExtensions
     /// </summary>
     /// <param name = "enumValue">The enumeration value.</param>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
-    public static IEnumerable<EPublicFoo> GetValues(this EPublicFoo enumValue)
+    public static FrozenSet<EPublicFoo> GetValues(this EPublicFoo enumValue)
     {
         return values;
     }
@@ -339,7 +338,11 @@ public static partial class EPublicFooExtensions
 ```csharp
 public static partial class EPublicFooExtensions
 {
-    private static readonly IDictionary<EPublicFoo, DisplayResult?> displayResultDictionary = new Dictionary<EPublicFoo, DisplayResult?>
+    /// <summary>
+    /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref = "EPublicFoo"/> enum.
+    /// </summary>
+    /// <returns>The display attribute result or the enum value.</returns>
+    public static FrozenDictionary<EPublicFoo, DisplayResult?> DisplayResults => new Dictionary<EPublicFoo, DisplayResult?>
     {
         {
             EPublicFoo.Foo,
@@ -369,12 +372,7 @@ public static partial class EPublicFooExtensions
             EPublicFoo.Batz,
             null
         },
-    };
-    /// <summary>
-    /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref = "EPublicFoo"/> enum.
-    /// </summary>
-    /// <returns>The display attribute result or the enum value.</returns>
-    public static IReadOnlyDictionary<EPublicFoo, DisplayResult?> DisplayResults => new ReadOnlyDictionary<EPublicFoo, DisplayResult?>(displayResultDictionary);
+    }.ToFrozenDictionary();
 
     /// <summary>
     /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName"/> of the <see cref = "EPublicFoo"/> enum.
@@ -387,7 +385,7 @@ public static partial class EPublicFooExtensions
         {
             EPublicFoo.Foo => "Fo",
             EPublicFoo.Bar => "Ba",
-            EPublicFoo.Batz => "Batz",
+            EPublicFoo.Batz => null,
             _ => null
         };
     }
@@ -403,7 +401,7 @@ public static partial class EPublicFooExtensions
         {
             EPublicFoo.Foo => "Foo - 0",
             EPublicFoo.Bar => "Bar - 1",
-            EPublicFoo.Batz => "Batz",
+            EPublicFoo.Batz => null,
             _ => null
         };
     }
