@@ -40,7 +40,7 @@
 
 
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/EngRajabi/FusionReactor.SourceGenerators.EnumExtensions</RepositoryUrl>
+    <RepositoryUrl>https://github.com/OhFlowi/FusionReactor.SourceGenerators.EnumExtensions</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
