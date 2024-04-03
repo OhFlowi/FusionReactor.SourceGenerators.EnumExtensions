@@ -25,7 +25,7 @@ public class DisplayNameStrategy : IExtensionGeneratorStrategy
             {
                 if (!member.ExtractStringValue("Name", out var value))
                 {
-                    stringBuilder.AppendLine($"{enumDeclarationSyntax.Name}.{member.Name} => \"{member.Name}\",");
+                    stringBuilder.AppendLine($"{enumDeclarationSyntax.Name}.{member.Name} => null,");
 
                     continue;
                 }
