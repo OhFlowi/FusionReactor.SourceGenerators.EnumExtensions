@@ -21,14 +21,13 @@ public class ContentStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
-              private static readonly IDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> contentDictionary
+              private static readonly FrozenDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> content
                 = new Dictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}>
                   {
                       {{stringBuilder}}
-                  };
+                  }
+                  .ToFrozenDictionary();
 
-              private static readonly IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> content
-                = new ReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}>(contentDictionary);
               """;
     }
 }

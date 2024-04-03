@@ -18,7 +18,7 @@ public class GetContentStrategy : IExtensionGeneratorStrategy
               /// Gets the content dictionary containing mappings of <see cref="{{enumDeclarationSyntax.Name}}"/> enum values to values.
               /// </summary>
               /// <returns>The read-only content dictionary.</returns>
-              public static IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> GetContent()
+              public static FrozenDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> GetContent()
               {
                 return content;
               }
@@ -28,7 +28,7 @@ public class GetContentStrategy : IExtensionGeneratorStrategy
               /// </summary>
               /// <param name="enumValue">The enum value for which to get the content dictionary.</param>
               /// <returns>The read-only content dictionary.</returns>
-              public static IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> GetContent(this {{enumDeclarationSyntax.Name}} enumValue)
+              public static FrozenDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> GetContent(this {{enumDeclarationSyntax.Name}} enumValue)
               {
                 return content;
               }
