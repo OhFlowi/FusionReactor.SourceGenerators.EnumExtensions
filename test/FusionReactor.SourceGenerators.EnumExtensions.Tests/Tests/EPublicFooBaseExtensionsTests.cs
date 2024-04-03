@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Frozen;
 using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
@@ -6,25 +6,27 @@ namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
 public class EPublicFooBaseExtensionsTests
 {
     private static readonly IReadOnlyDictionary<EPublicFoo, Int32> expectedContent
-        = new ReadOnlyDictionary<EPublicFoo, Int32>(
-            new Dictionary<EPublicFoo, Int32>
+        = new Dictionary<EPublicFoo, Int32>
             {
                 { EPublicFoo.Foo, 0 },
                 { EPublicFoo.Bar, 1 },
                 { EPublicFoo.Batz, 2 },
-            });
-    private static readonly IEnumerable<string> expectedNames = new[]
+            }
+            .ToFrozenDictionary();
+    private static readonly FrozenSet<string> expectedNames = new[]
     {
         "Foo",
         "Bar",
         "Batz",
-    };
-    private static readonly IEnumerable<EPublicFoo> expectedValues = new[]
+    }
+    .ToFrozenSet();
+    private static readonly FrozenSet<EPublicFoo> expectedValues = new[]
     {
         EPublicFoo.Foo,
         EPublicFoo.Bar,
         EPublicFoo.Batz,
-    };
+    }
+    .ToFrozenSet();
 
     [Fact]
     public void GetContentReturnsExpectedDictionary()
