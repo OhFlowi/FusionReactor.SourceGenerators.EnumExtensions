@@ -7,8 +7,8 @@ public class EPublicFooDisplayAttributeExtensionsTests
     [Theory]
     [InlineData(EPublicFoo.Foo, "Fo")]
     [InlineData(EPublicFoo.Bar, "Ba")]
-    [InlineData(EPublicFoo.Batz, "Batz")]
-    public void DisplayShortNameShouldReturnCorrectValue(EPublicFoo enumValue, string expected)
+    [InlineData(EPublicFoo.Batz, null)]
+    public void DisplayShortNameShouldReturnCorrectValue(EPublicFoo enumValue, string? expected)
     {
         // Act
         var result = enumValue.DisplayShortName();
@@ -20,8 +20,8 @@ public class EPublicFooDisplayAttributeExtensionsTests
     [Theory]
     [InlineData(EPublicFoo.Foo, "Foo - 0")]
     [InlineData(EPublicFoo.Bar, "Bar - 1")]
-    [InlineData(EPublicFoo.Batz, "Batz")]
-    public void DisplayNameShouldReturnCorrectValue(EPublicFoo enumValue, string expected)
+    [InlineData(EPublicFoo.Batz, null)]
+    public void DisplayNameShouldReturnCorrectValue(EPublicFoo enumValue, string? expected)
     {
         // Act
         var result = enumValue.DisplayName();
