@@ -28,11 +28,23 @@ public class ValuesStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
-              private static readonly FrozenSet<{{enumDeclarationSyntax.Name}}> values = new[]
+              #if NET8_0_OR_GREATER
+              private static readonly FrozenSet<{{enumDeclarationSyntax.Name}}> values = new []
               {
-                {{stringBuilder}}
+                  {{stringBuilder}}
               }
               .ToFrozenSet();
+              #elif NET5_0_OR_GREATER
+              private static readonly IReadOnlySet<{{enumDeclarationSyntax.Name}}> values = new HashSet<{{enumDeclarationSyntax.Name}}>()
+              {
+                  {{stringBuilder}}
+              };
+              #else
+              private static readonly HashSet<{{enumDeclarationSyntax.Name}}> values = new HashSet<{{enumDeclarationSyntax.Name}}>()
+              {
+                  {{stringBuilder}}
+              };
+              #endif
 
               """;
     }
