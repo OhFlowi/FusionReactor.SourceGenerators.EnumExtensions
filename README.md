@@ -436,7 +436,7 @@ public static partial class EPublicFooExtensions
 ```csharp
 public static partial class EPublicFooExtensions
 {
-    #if !NET8_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     private static readonly Dictionary<EPublicFoo, DisplayResult?> displayResultsDictionary = new Dictionary<EPublicFoo, DisplayResult?>
     {
         {
