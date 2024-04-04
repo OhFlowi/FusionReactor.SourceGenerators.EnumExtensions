@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace NetFramework472;
+using System.ComponentModel.DataAnnotations;
 using FusionReactor.SourceGenerators.EnumExtensions;
-
-namespace NetFramework472;
 
 [GenerateEnumExtensions]
 public enum EPublicFoo

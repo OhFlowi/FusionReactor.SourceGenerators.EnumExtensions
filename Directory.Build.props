@@ -9,7 +9,7 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <Nullable>enable</Nullable>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
-    <NoWarn>$(NoWarn);CA1016;S3904;CA1008;</NoWarn>
+    <NoWarn>$(NoWarn);CA1016;S3904;CA1008;CA1308;</NoWarn>
     <NoError>$(NoError);</NoError>
     <ReportAnalyzer>true</ReportAnalyzer>
     <AnalysisMode>All</AnalysisMode>

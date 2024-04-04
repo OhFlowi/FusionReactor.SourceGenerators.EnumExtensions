@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace NetCore31;
+using System.ComponentModel.DataAnnotations;
 using FusionReactor.SourceGenerators.EnumExtensions;
-
-namespace NetCore31;
 
 [GenerateEnumExtensions]
 public enum EPublicFoo

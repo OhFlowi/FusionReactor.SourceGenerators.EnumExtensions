@@ -1,12 +1,19 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
+// <copyright file="GetValuesStrategy.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
 
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+
+/// <inheritdoc />
 public class GetValuesStrategy : IExtensionGeneratorStrategy
 {
+    /// <summary>
+    /// Gets the factory instance of <see cref="GetValuesStrategy"/>.
+    /// </summary>
     public static IExtensionGeneratorStrategy Factory => new GetValuesStrategy();
 
     /// <inheritdoc />

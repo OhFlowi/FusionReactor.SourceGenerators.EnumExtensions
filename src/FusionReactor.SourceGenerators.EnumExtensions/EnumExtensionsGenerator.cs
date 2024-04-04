@@ -1,14 +1,17 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Constants;
+﻿// <copyright file="EnumExtensionsGenerator.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
+
+namespace FusionReactor.SourceGenerators.EnumExtensions;
+
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Constants;
 using FusionReactor.SourceGenerators.EnumExtensions.Extensions;
 using FusionReactor.SourceGenerators.EnumExtensions.Generators;
 using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-
-namespace FusionReactor.SourceGenerators.EnumExtensions;
 
 /// <inheritdoc />
 [Generator]

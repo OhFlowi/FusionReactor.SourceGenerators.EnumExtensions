@@ -1,12 +1,19 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
+// <copyright file="NamesStrategy.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
 
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+
+/// <inheritdoc />
 public class NamesStrategy : IExtensionGeneratorStrategy
 {
+    /// <summary>
+    /// Gets the factory instance of <see cref="NamesStrategy"/>.
+    /// </summary>
     public static IExtensionGeneratorStrategy Factory => new NamesStrategy();
 
     /// <inheritdoc />

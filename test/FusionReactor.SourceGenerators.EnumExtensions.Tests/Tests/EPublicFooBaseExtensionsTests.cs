@@ -1,26 +1,25 @@
-﻿using System.Collections.Frozen;
-using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
-
 namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
+using System.Collections.Frozen;
+using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
 public class EPublicFooBaseExtensionsTests
 {
-    private static readonly IReadOnlyDictionary<EPublicFoo, Int32> expectedContent
-        = new Dictionary<EPublicFoo, Int32>
+    private static readonly IReadOnlyDictionary<EPublicFoo, int> ExpectedContent
+        = new Dictionary<EPublicFoo, int>
             {
                 { EPublicFoo.Foo, 0 },
                 { EPublicFoo.Bar, 1 },
                 { EPublicFoo.Batz, 2 },
             }
             .ToFrozenDictionary();
-    private static readonly FrozenSet<string> expectedNames = new[]
+    private static readonly FrozenSet<string> ExpectedNames = new[]
     {
         "Foo",
         "Bar",
         "Batz",
     }
     .ToFrozenSet();
-    private static readonly FrozenSet<EPublicFoo> expectedValues = new[]
+    private static readonly FrozenSet<EPublicFoo> ExpectedValues = new[]
     {
         EPublicFoo.Foo,
         EPublicFoo.Bar,
@@ -35,7 +34,7 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.NotNull(content);
         Assert.NotEmpty(content);
-        Assert.Equal(expectedContent, content);
+        Assert.Equal(ExpectedContent, content);
     }
 
     [Fact]
@@ -45,17 +44,14 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.NotNull(content);
         Assert.NotEmpty(content);
-        Assert.Equal(expectedContent, content);
+        Assert.Equal(ExpectedContent, content);
     }
 
     [Theory]
     [InlineData(EPublicFoo.Foo, "Foo")]
     [InlineData(EPublicFoo.Bar, "Bar")]
     [InlineData(EPublicFoo.Batz, "Batz")]
-    public void GetNameReturnsExpectedString(EPublicFoo enumValue, string? expectedString)
-    {
-        Assert.Equal(expectedString, enumValue.GetName());
-    }
+    public void GetNameReturnsExpectedString(EPublicFoo enumValue, string? expectedString) => Assert.Equal(expectedString, enumValue.GetName());
 
     [Fact]
     public void GetNamesReturnsExpectedEnumerable()
@@ -64,7 +60,7 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.NotNull(names);
         Assert.NotEmpty(names);
-        Assert.Equal(expectedNames, names);
+        Assert.Equal(ExpectedNames, names);
     }
 
     [Fact]
@@ -74,7 +70,7 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.NotNull(names);
         Assert.NotEmpty(names);
-        Assert.Equal(expectedNames, names);
+        Assert.Equal(ExpectedNames, names);
     }
 
     [Fact]
@@ -84,7 +80,7 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.NotNull(values);
         Assert.NotEmpty(values);
-        Assert.Equal(expectedValues, values);
+        Assert.Equal(ExpectedValues, values);
     }
 
     [Fact]
@@ -94,7 +90,7 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.NotNull(values);
         Assert.NotEmpty(values);
-        Assert.Equal(expectedValues, values);
+        Assert.Equal(ExpectedValues, values);
     }
 
     /*

@@ -1,19 +1,23 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
+// <copyright file="GetContentStrategy.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
 
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+
+/// <inheritdoc />
 public class GetContentStrategy : IExtensionGeneratorStrategy
 {
+    /// <summary>
+    /// Gets the factory instance of <see cref="GetContentStrategy"/>.
+    /// </summary>
     public static IExtensionGeneratorStrategy Factory => new GetContentStrategy();
 
     /// <inheritdoc />
     public string GetMethod(IncrementalGeneratorInitializationContext context, EnumDefinition enumDeclarationSyntax)
-    {
-        return
-            $$"""
+        => $$"""
               /// <summary>
               /// Gets the content dictionary containing mappings of <see cref="{{enumDeclarationSyntax.Name}}"/> enum values to values.
               /// </summary>
@@ -41,5 +45,4 @@ public class GetContentStrategy : IExtensionGeneratorStrategy
                 return content;
               }
               """;
-    }
 }

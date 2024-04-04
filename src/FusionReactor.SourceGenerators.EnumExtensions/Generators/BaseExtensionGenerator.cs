@@ -1,16 +1,22 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
-using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+// <copyright file="BaseExtensionGenerator.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators;
 
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+
+/// <summary>
+/// Represents a static class for generating base extensions.
+/// </summary>
 public static class BaseExtensionGenerator
 {
-    private static readonly IEnumerable<IExtensionGeneratorStrategy> Strategies = new[]
-    {
+    private static readonly IEnumerable<IExtensionGeneratorStrategy> Strategies =
+    [
         ContentStrategy.Factory,
         NamesStrategy.Factory,
         ValuesStrategy.Factory,
@@ -18,11 +24,18 @@ public static class BaseExtensionGenerator
         GetNameStrategy.Factory,
         GetNamesStrategy.Factory,
         GetValuesStrategy.Factory,
-        //HasFlagFastStrategy.Factory,
+
+        // HasFlagFastStrategy.Factory,
         ParseStrategy.Factory,
         TryParseStrategy.Factory,
-    };
+    ];
 
+    /// <summary>
+    /// Generates a base extension string based on the provided initialization context and enum definition.
+    /// </summary>
+    /// <param name="context">The initialization context for the incremental generator.</param>
+    /// <param name="node">The enum definition for which the base extension is generated.</param>
+    /// <returns>A string representing the generated base extension.</returns>
     public static string Generate(IncrementalGeneratorInitializationContext context, EnumDefinition node)
     {
         var strategyResults = Strategies

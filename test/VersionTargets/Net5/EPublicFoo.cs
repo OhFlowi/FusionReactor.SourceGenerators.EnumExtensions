@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace Net5;
+using System.ComponentModel.DataAnnotations;
 using FusionReactor.SourceGenerators.EnumExtensions;
-
-namespace Net5;
 
 [GenerateEnumExtensions]
 public enum EPublicFoo

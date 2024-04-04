@@ -1,16 +1,22 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.DisplayAttribute;
-using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+// <copyright file="DisplayAttributeExtensionGenerator.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators;
 
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.DisplayAttribute;
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+
+/// <summary>
+/// Provides methods for generating display attribute extension code for enum definitions.
+/// </summary>
 public static class DisplayAttributeExtensionGenerator
 {
-    private static readonly IEnumerable<IExtensionGeneratorStrategy> Strategies = new[]
-    {
+    private static readonly IEnumerable<IExtensionGeneratorStrategy> Strategies =
+    [
         PropertyDisplayResultStrategy.Factory,
         DisplayShortNameStrategy.Factory,
         DisplayNameStrategy.Factory,
@@ -18,8 +24,14 @@ public static class DisplayAttributeExtensionGenerator
         DisplayPromptStrategy.Factory,
         DisplayGroupNameStrategy.Factory,
         DisplayOrderStrategy.Factory,
-    };
+    ];
 
+    /// <summary>
+    /// Generates display attribute extension code for the specified enum definition.
+    /// </summary>
+    /// <param name="context">The initialization context for the incremental generator.</param>
+    /// <param name="node">The enum definition for which to generate the display attribute extension.</param>
+    /// <returns>The generated display attribute extension code as a string.</returns>
     public static string Generate(IncrementalGeneratorInitializationContext context, EnumDefinition node)
     {
         var strategyResults = Strategies

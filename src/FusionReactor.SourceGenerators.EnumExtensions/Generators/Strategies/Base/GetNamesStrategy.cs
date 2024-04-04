@@ -1,19 +1,22 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
+// <copyright file="GetNamesStrategy.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
 
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+
+/// <inheritdoc />
 public class GetNamesStrategy : IExtensionGeneratorStrategy
 {
+    /// <summary>
+    /// Gets the factory instance of <see cref="GetNamesStrategy"/>.
+    /// </summary>
     public static IExtensionGeneratorStrategy Factory => new GetNamesStrategy();
 
     /// <inheritdoc />
-    public string GetMethod(IncrementalGeneratorInitializationContext context, EnumDefinition enumDeclarationSyntax)
-    {
-        return
-            $$"""
+    public string GetMethod(IncrementalGeneratorInitializationContext context, EnumDefinition enumDeclarationSyntax) => $$"""
                /// <summary>
                /// Retrieves all available names of the <see cref="{{enumDeclarationSyntax.Name}}"/>.
                /// </summary>
@@ -45,5 +48,4 @@ public class GetNamesStrategy : IExtensionGeneratorStrategy
                  return names;
                }
                """;
-    }
 }

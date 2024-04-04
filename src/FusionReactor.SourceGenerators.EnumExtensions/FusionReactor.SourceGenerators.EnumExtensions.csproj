@@ -11,6 +11,7 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageId>FusionReactor.SourceGenerators.EnumExtensions</PackageId>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,5 +29,12 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <AdditionalFiles Include="$(SolutionDir)stylecop.json" Link="Properties\stylecop.json" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
+﻿namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
+using System.ComponentModel.DataAnnotations;
 
 [GenerateEnumExtensions]
 public enum EPublicFoo
