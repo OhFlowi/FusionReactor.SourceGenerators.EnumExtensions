@@ -21,12 +21,22 @@ public class ContentStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
+              #if NET8_0_OR_GREATER
               private static readonly FrozenDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> content
                 = new Dictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}>
                   {
                       {{stringBuilder}}
                   }
                   .ToFrozenDictionary();
+              #else
+              private static readonly Dictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> contentDictionary
+              = new Dictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}>
+                {
+                    {{stringBuilder}}
+                };
+              private static readonly IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}> content
+              = new ReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, {{enumDeclarationSyntax.UnderlyingType}}>(contentDictionary);
+              #endif
 
               """;
     }
