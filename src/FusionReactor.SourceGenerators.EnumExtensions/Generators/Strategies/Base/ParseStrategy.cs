@@ -1,12 +1,19 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
+// <copyright file="ParseStrategy.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
 
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+
+/// <inheritdoc />
 public class ParseStrategy : IExtensionGeneratorStrategy
 {
+    /// <summary>
+    /// Gets the factory instance of <see cref="ParseStrategy"/>.
+    /// </summary>
     public static IExtensionGeneratorStrategy Factory => new ParseStrategy();
 
     /// <inheritdoc />
@@ -49,7 +56,7 @@ public class ParseStrategy : IExtensionGeneratorStrategy
                 {
                     return value.ToLowerInvariant() switch
                     {
-                        {{ ignoreCaseStringBuilder }}
+                        {{ignoreCaseStringBuilder}}
                         _ => throw new ArgumentException(),
                     };
                 }
@@ -57,7 +64,7 @@ public class ParseStrategy : IExtensionGeneratorStrategy
                 {
                     return value switch
                     {
-                        {{ stringBuilder }}
+                        {{stringBuilder}}
                         _ => throw new ArgumentException(),
                     };
                 }
@@ -81,7 +88,7 @@ public class ParseStrategy : IExtensionGeneratorStrategy
                   {
                       return value.ToLowerInvariant() switch
                       {
-                          {{ ignoreCaseStringBuilder }}
+                          {{ignoreCaseStringBuilder}}
                           _ => throw new ArgumentException(),
                       };
                   }
@@ -89,7 +96,7 @@ public class ParseStrategy : IExtensionGeneratorStrategy
                   {
                       return value switch
                       {
-                          {{ stringBuilder }}
+                          {{stringBuilder}}
                           _ => throw new ArgumentException(),
                       };
                   }

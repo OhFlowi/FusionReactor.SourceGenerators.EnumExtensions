@@ -1,6 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
+﻿// <copyright file="NamespaceSymbolExtensions.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Extensions;
+
+using Microsoft.CodeAnalysis;
 
 /// <summary>
 /// Provides extension methods for <see cref="INamespaceSymbol"/> objects.

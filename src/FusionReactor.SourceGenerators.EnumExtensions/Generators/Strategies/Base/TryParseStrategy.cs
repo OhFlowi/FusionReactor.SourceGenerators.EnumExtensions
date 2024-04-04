@@ -1,12 +1,19 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
-using System.Text;
-
-using Microsoft.CodeAnalysis;
+// <copyright file="TryParseStrategy.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Generators.Strategies.Base;
 
+using System.Text;
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using Microsoft.CodeAnalysis;
+
+/// <inheritdoc />
 public class TryParseStrategy : IExtensionGeneratorStrategy
 {
+    /// <summary>
+    /// Gets the factory instance of <see cref="TryParseStrategy"/>.
+    /// </summary>
     public static IExtensionGeneratorStrategy Factory => new TryParseStrategy();
 
     /// <inheritdoc />
@@ -62,7 +69,7 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
                   {
                       result = value.ToLowerInvariant() switch
                       {
-                          {{ ignoreCaseStringBuilder }}
+                          {{ignoreCaseStringBuilder}}
                           _ => null,
                       };
                   }
@@ -70,7 +77,7 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
                   {
                       result = value switch
                       {
-                          {{ stringBuilder }}
+                          {{stringBuilder}}
                           _ => null,
                       };
                   }
@@ -110,7 +117,7 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
                   {
                       result = value.ToLowerInvariant() switch
                       {
-                          {{ ignoreCaseStringBuilder }}
+                          {{ignoreCaseStringBuilder}}
                           _ => null,
                       };
                   }
@@ -118,7 +125,7 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
                   {
                       result = value switch
                       {
-                          {{ stringBuilder }}
+                          {{stringBuilder}}
                           _ => null,
                       };
                   }

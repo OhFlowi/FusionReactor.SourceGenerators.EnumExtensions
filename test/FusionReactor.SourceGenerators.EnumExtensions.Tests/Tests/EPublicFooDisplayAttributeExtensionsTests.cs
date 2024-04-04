@@ -1,6 +1,5 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
-
-namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
+﻿namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
+using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
 public class EPublicFooDisplayAttributeExtensionsTests
 {

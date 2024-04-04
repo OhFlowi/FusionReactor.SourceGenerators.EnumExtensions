@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
 namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+
 [GenerateEnumExtensions]
+[SuppressMessage("Style", "IDE0040:Add accessibility modifiers", Justification = "Reviewed.")]
+// ReSharper disable once ArrangeTypeModifiers
 enum EPrivateFoo
 {
     [Display(

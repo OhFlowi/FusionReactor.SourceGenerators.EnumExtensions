@@ -1,6 +1,10 @@
-﻿using FusionReactor.SourceGenerators.EnumExtensions.Models;
+// <copyright file="EnumMemberExtensions.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions.Extensions;
+
+using FusionReactor.SourceGenerators.EnumExtensions.Models;
 
 /// <summary>
 /// Provides extension methods for <see cref="EnumMember"/> objects.

@@ -1,13 +1,14 @@
-﻿// The .NET Foundation licenses this file to you under the MIT license.
+﻿// <copyright file="IncrementalGeneratorInitializationContextExtensions.cs" company="OhFlowi">
+// Copyright (c) OhFlowi. All rights reserved.
+// </copyright>
 
-using FusionReactor.SourceGenerators.EnumExtensions.Constants;
+namespace FusionReactor.SourceGenerators.EnumExtensions.Extensions;
+
 using System.Text;
-
+using FusionReactor.SourceGenerators.EnumExtensions.Constants;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-
-namespace FusionReactor.SourceGenerators.EnumExtensions.Extensions;
 
 /// <summary>
 /// Contains extension methods for the <see cref="IncrementalGeneratorInitializationContext"/> class.
