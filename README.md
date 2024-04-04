@@ -4,7 +4,10 @@
 
 # FusionReactor.SourceGenerators.EnumExtensions
 A C# source generator to create extensions for an enum type.
-The extensions are optimized for speed and low resource consumption.
+- Optimized for speed and low resource consumption
+- .NET8+ Support by using FrozenDictionary & FrozenSet
+- .NET5+ Support by using IReadOnlyDictionary & IReadOnlySet
+- .NET Framework 4.5+ Support by using IReadOnlyDictionary & HashSet
 
 **Package** - [FusionReactor.SourceGenerators.EnumExtensions](https://www.nuget.org/packages/FusionReactor.SourceGenerators.EnumExtensions/)
 
@@ -56,6 +59,7 @@ This will generate a class called `EPublicFooExtensions` (`EPublicFoo` + `Extens
 [GeneratedCode("FusionReactor.SourceGenerators.EnumExtensions", null)]
 public static partial class EPublicFooExtensions
 {
+#if NET8_0_OR_GREATER
     private static readonly FrozenDictionary<EPublicFoo, Int32> content = new Dictionary<EPublicFoo, Int32>
     {
         {
@@ -70,24 +74,86 @@ public static partial class EPublicFooExtensions
             EPublicFoo.Batz,
             2
         },
-    }.ToFrozenDictionary();
-    private static readonly FrozenSet<string> names = new[]
+    }
+    .ToFrozenDictionary();
+#else
+    private static readonly Dictionary<EPublicFoo, Int32> contentDictionary = new Dictionary<EPublicFoo, Int32>
+    {
+        {
+            EPublicFoo.Foo,
+            0
+        },
+        {
+            EPublicFoo.Bar,
+            1
+        },
+        {
+            EPublicFoo.Batz,
+            2
+        },
+    };
+
+    private static readonly IReadOnlyDictionary<EPublicFoo, Int32> content
+        = new ReadOnlyDictionary<EPublicFoo, Int32>(contentDictionary);
+#endif
+
+#if NET8_0_OR_GREATER
+    private static readonly FrozenSet<string> names = new []
     {
         "Foo",
         "Bar",
         "Batz",
-    }.ToFrozenSet();
-    private static readonly FrozenSet<EPublicFoo> values = new[]
+    }
+    .ToFrozenSet();
+#elif NET5_0_OR_GREATER
+    private static readonly IReadOnlySet<string> names = new HashSet<string>()
+    {
+        "Foo",
+        "Bar",
+        "Batz",
+    };
+#else
+    private static readonly HashSet<string> names = new HashSet<string>()
+    {
+        "Foo",
+        "Bar",
+        "Batz",
+    };
+#endif
+
+#if NET8_0_OR_GREATER
+    private static readonly FrozenSet<EPublicFoo> values = new []
     {
         EPublicFoo.Foo,
         EPublicFoo.Bar,
         EPublicFoo.Batz,
-    }.ToFrozenSet();
+    }
+    .ToFrozenSet();
+#elif NET5_0_OR_GREATER
+    private static readonly IReadOnlySet<EPublicFoo> values = new HashSet<EPublicFoo>()
+    {
+        EPublicFoo.Foo,
+        EPublicFoo.Bar,
+        EPublicFoo.Batz,
+    };
+#else
+    private static readonly HashSet<EPublicFoo> values = new HashSet<EPublicFoo>()
+    {
+        EPublicFoo.Foo,
+        EPublicFoo.Bar,
+        EPublicFoo.Batz,
+    };
+#endif
+
     /// <summary>
     /// Gets the content dictionary containing mappings of <see cref = "EPublicFoo"/> enum values to values.
     /// </summary>
     /// <returns>The read-only content dictionary.</returns>
+#if NET8_0_OR_GREATER
     public static FrozenDictionary<EPublicFoo, Int32> GetContent()
+#else
+    public static IReadOnlyDictionary<EPublicFoo, Int32> GetContent()
+#endif
     {
         return content;
     }
@@ -97,7 +163,11 @@ public static partial class EPublicFooExtensions
     /// </summary>
     /// <param name = "enumValue">The enum value for which to get the content dictionary.</param>
     /// <returns>The read-only content dictionary.</returns>
+#if NET8_0_OR_GREATER
     public static FrozenDictionary<EPublicFoo, Int32> GetContent(this EPublicFoo enumValue)
+#else
+    public static IReadOnlyDictionary<EPublicFoo, Int32> GetContent(this EPublicFoo enumValue)
+#endif
     {
         return content;
     }
@@ -125,7 +195,13 @@ public static partial class EPublicFooExtensions
     /// Retrieves all available names of the <see cref = "EPublicFoo"/>.
     /// </summary>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> names.</returns>
+#if NET8_0_OR_GREATER
     public static FrozenSet<string> GetNames()
+#elif NET5_0_OR_GREATER
+    public static IReadOnlySet<string> GetNames()
+#else
+    public static HashSet<string> GetNames()
+#endif
     {
         return names;
     }
@@ -135,7 +211,13 @@ public static partial class EPublicFooExtensions
     /// </summary>
     /// <param name = "enumValue">The enumeration value.</param>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> names.</returns>
+#if NET8_0_OR_GREATER
     public static FrozenSet<string> GetNames(this EPublicFoo enumValue)
+#elif NET5_0_OR_GREATER
+    public static IReadOnlySet<string> GetNames(this EPublicFoo enumValue)
+#else
+    public static HashSet<string> GetNames(this EPublicFoo enumValue)
+#endif
     {
         return names;
     }
@@ -144,7 +226,13 @@ public static partial class EPublicFooExtensions
     /// Retrieves all available values of the <see cref = "EPublicFoo"/>.
     /// </summary>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
+#if NET8_0_OR_GREATER
     public static FrozenSet<EPublicFoo> GetValues()
+#elif NET5_0_OR_GREATER
+    public static IReadOnlySet<EPublicFoo> GetValues()
+#else
+    public static HashSet<EPublicFoo> GetValues()
+#endif
     {
         return values;
     }
@@ -154,7 +242,13 @@ public static partial class EPublicFooExtensions
     /// </summary>
     /// <param name = "enumValue">The enumeration value.</param>
     /// <returns>An enumerable collection of <see cref = "EPublicFoo"/> values.</returns>
+#if NET8_0_OR_GREATER
     public static FrozenSet<EPublicFoo> GetValues(this EPublicFoo enumValue)
+#elif NET5_0_OR_GREATER
+    public static IReadOnlySet<EPublicFoo> GetValues(this EPublicFoo enumValue)
+#else
+    public static HashSet<EPublicFoo> GetValues(this EPublicFoo enumValue)
+#endif
     {
         return values;
     }
@@ -338,11 +432,8 @@ public static partial class EPublicFooExtensions
 ```csharp
 public static partial class EPublicFooExtensions
 {
-    /// <summary>
-    /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref = "EPublicFoo"/> enum.
-    /// </summary>
-    /// <returns>The display attribute result or the enum value.</returns>
-    public static FrozenDictionary<EPublicFoo, DisplayResult?> DisplayResults => new Dictionary<EPublicFoo, DisplayResult?>
+    #if !NET8_0_OR_GREATER
+    private static readonly Dictionary<EPublicFoo, DisplayResult?> displayResultsDictionary = new Dictionary<EPublicFoo, DisplayResult?>
     {
         {
             EPublicFoo.Foo,
@@ -372,7 +463,46 @@ public static partial class EPublicFooExtensions
             EPublicFoo.Batz,
             null
         },
-    }.ToFrozenDictionary();
+    };
+#endif
+    /// <summary>
+    /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref = "EPublicFoo"/> enum.
+    /// </summary>
+    /// <returns>The display attribute result or the enum value.</returns>
+#if NET8_0_OR_GREATER
+    public static FrozenDictionary<EPublicFoo, DisplayResult?> DisplayResults => new Dictionary<EPublicFoo, DisplayResult?>
+    {
+        {
+            EPublicFoo.Foo,
+            new DisplayResult
+            {
+                ShortName = "Fo",
+                Name = "Foo - 0",
+                Description = "Zero",
+                Prompt = "ooF",
+                GroupName = "Foos",
+                Order = 0,
+        }},
+        {
+            EPublicFoo.Bar,
+            new DisplayResult
+            {
+                ShortName = "Ba",
+                Name = "Bar - 1",
+                Description = "One",
+                Prompt = "raB",
+                GroupName = "Bars",
+                Order = 1,
+            }},
+        {
+            EPublicFoo.Batz,
+            null
+        },
+    }
+    .ToFrozenDictionary();
+#else
+    public static IReadOnlyDictionary<EPublicFoo, DisplayResult?> DisplayResults => new ReadOnlyDictionary<EPublicFoo, DisplayResult?>(displayResultsDictionary);
+#endif
 
     /// <summary>
     /// Returns the <see cref = "System.ComponentModel.DataAnnotations.DisplayAttribute.ShortName"/> of the <see cref = "EPublicFoo"/> enum.

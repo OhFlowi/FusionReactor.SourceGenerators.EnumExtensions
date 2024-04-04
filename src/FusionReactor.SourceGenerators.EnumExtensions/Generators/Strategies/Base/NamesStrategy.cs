@@ -28,11 +28,23 @@ public class NamesStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
+               #if NET8_0_OR_GREATER
                private static readonly FrozenSet<string> names = new []
                {
                    {{stringBuilder}}
                }
                .ToFrozenSet();
+               #elif NET5_0_OR_GREATER
+               private static readonly IReadOnlySet<string> names = new HashSet<string>()
+               {
+                   {{stringBuilder}}
+               };
+               #else
+               private static readonly HashSet<string> names = new HashSet<string>()
+               {
+                   {{stringBuilder}}
+               };
+               #endif
 
                """;
     }

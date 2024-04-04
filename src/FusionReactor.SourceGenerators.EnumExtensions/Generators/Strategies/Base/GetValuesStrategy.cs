@@ -32,7 +32,13 @@ public class GetValuesStrategy : IExtensionGeneratorStrategy
               /// Retrieves all available values of the <see cref="{{enumDeclarationSyntax.Name}}"/>.
               /// </summary>
               /// <returns>An enumerable collection of <see cref="{{enumDeclarationSyntax.Name}}"/> values.</returns>
+              #if NET8_0_OR_GREATER
               public static FrozenSet<{{enumDeclarationSyntax.Name}}> GetValues()
+              #elif NET5_0_OR_GREATER
+              public static IReadOnlySet<{{enumDeclarationSyntax.Name}}> GetValues()
+              #else
+              public static HashSet<{{enumDeclarationSyntax.Name}}> GetValues()
+              #endif
               {
                 return values;
               }
@@ -42,7 +48,13 @@ public class GetValuesStrategy : IExtensionGeneratorStrategy
               /// </summary>
               /// <param name="enumValue">The enumeration value.</param>
               /// <returns>An enumerable collection of <see cref="{{enumDeclarationSyntax.Name}}"/> values.</returns>
+              #if NET8_0_OR_GREATER
               public static FrozenSet<{{enumDeclarationSyntax.Name}}> GetValues(this {{enumDeclarationSyntax.Name}} enumValue)
+              #elif NET5_0_OR_GREATER
+              public static IReadOnlySet<{{enumDeclarationSyntax.Name}}> GetValues(this {{enumDeclarationSyntax.Name}} enumValue)
+              #else
+              public static HashSet<{{enumDeclarationSyntax.Name}}> GetValues(this {{enumDeclarationSyntax.Name}} enumValue)
+              #endif
               {
                 return values;
               }

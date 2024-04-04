@@ -40,7 +40,9 @@ public static class DisplayAttributeExtensionGenerator
         returnValue.AppendLine();
         returnValue.AppendLine("using System;");
         returnValue.AppendLine("using System.Collections;");
+        returnValue.AppendLine("#if NET8_0_OR_GREATER");
         returnValue.AppendLine("using System.Collections.Frozen;");
+        returnValue.AppendLine("#endif");
         returnValue.AppendLine("using System.Collections.Generic;");
         returnValue.AppendLine("using System.Collections.ObjectModel;");
         returnValue.AppendLine("using FusionReactor.SourceGenerators.EnumExtensions;");

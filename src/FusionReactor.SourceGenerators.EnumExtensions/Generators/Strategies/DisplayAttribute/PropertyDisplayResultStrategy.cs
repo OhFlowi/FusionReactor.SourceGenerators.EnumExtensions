@@ -73,16 +73,29 @@ public class PropertyDisplayResultStrategy : IExtensionGeneratorStrategy
 
         return
             $$"""
+              #if !NET8_0_OR_GREATER
+              private static readonly Dictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?> displayResultsDictionary
+              = new Dictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>
+              {
+                  {{stringBuilder}}
+              };
+              #endif
+
               /// <summary>
               /// Returns the <see cref="System.ComponentModel.DataAnnotations.DisplayAttribute"/> of the <see cref="{{enumDeclarationSyntax.Name}}"/> enum.
               /// </summary>
               /// <returns>The display attribute result or the enum value.</returns>
+              #if NET8_0_OR_GREATER
               public static FrozenDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?> DisplayResults
                 => new Dictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>
                   {
                       {{stringBuilder}}
                   }
                   .ToFrozenDictionary();
+              #else
+              public static IReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?> DisplayResults
+              => new ReadOnlyDictionary<{{enumDeclarationSyntax.Name}}, DisplayResult?>(displayResultsDictionary);
+              #endif
               """;
     }
 }
