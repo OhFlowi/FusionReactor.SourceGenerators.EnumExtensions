@@ -5,9 +5,13 @@
 # FusionReactor.SourceGenerators.EnumExtensions
 A C# source generator to create extensions for an enum type.
 - Optimized for speed and low resource consumption
-- .NET8+ Support by using FrozenDictionary & FrozenSet
-- .NET5+ Support by using IReadOnlyDictionary & IReadOnlySet
-- .NET Framework 4.5+ Support by using IReadOnlyDictionary & HashSet
+- Support for non-standard enum declarations
+```csharp
+public enum EPublicFoo : byte
+```
+- .NET 8+ support by using [FrozenDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.frozen.frozendictionary-2) & [FrozenSet](https://learn.microsoft.com/en-us/dotnet/api/system.collections.frozen.frozenset-1)
+- .NET 5+ support by using [IReadOnlyDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlydictionary-2) & [IReadOnlySet](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlyset-1)
+- .NET Framework 4.5+ support by using [IReadOnlyDictionary](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ireadonlydictionary-2) & [HashSet](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1)
 
 **Package** - [FusionReactor.SourceGenerators.EnumExtensions](https://www.nuget.org/packages/FusionReactor.SourceGenerators.EnumExtensions/)
 
