@@ -268,7 +268,7 @@ public static partial class EPublicFooExtensions
     /// <returns>
     /// The <see cref = "EPublicFoo"/> value equivalent to the specified string representation.
     /// </returns>
-    public static EPublicFoo Parse(string value, bool ignoreCase = false)
+    public static EPublicFoo ParseFast(string value, bool ignoreCase = false)
     {
         if (ignoreCase)
         {
@@ -304,7 +304,7 @@ public static partial class EPublicFooExtensions
     /// <returns>
     /// The <see cref = "EPublicFoo"/> value equivalent to the specified string representation.
     /// </returns>
-    public static EPublicFoo Parse(this EPublicFoo enumValue, string value, bool ignoreCase = false)
+    public static EPublicFoo ParseFast(this EPublicFoo enumValue, string value, bool ignoreCase = false)
     {
         if (ignoreCase)
         {
@@ -337,9 +337,9 @@ public static partial class EPublicFooExtensions
     /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
     /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
     /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-    public static bool TryParse(string value, out EPublicFoo? result)
+    public static bool TryParseFast(string value, out EPublicFoo? result)
     {
-        return TryParse(value, false, out result);
+        return TryParseFast(value, false, out result);
     }
 
     /// <summary>
@@ -352,7 +352,7 @@ public static partial class EPublicFooExtensions
     /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
     /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
     /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-    public static bool TryParse(string value, bool ignoreCase, out EPublicFoo? result)
+    public static bool TryParseFast(string value, bool ignoreCase, out EPublicFoo? result)
     {
         if (ignoreCase)
         {
@@ -388,9 +388,9 @@ public static partial class EPublicFooExtensions
     /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
     /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
     /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-    public static bool TryParse(this EPublicFoo enumValue, string value, out EPublicFoo? result)
+    public static bool TryParseFast(this EPublicFoo enumValue, string value, out EPublicFoo? result)
     {
-        return TryParse(value, false, out result);
+        return TryParseFast(value, false, out result);
     }
 
     /// <summary>
@@ -404,7 +404,7 @@ public static partial class EPublicFooExtensions
     /// When this method returns, contains the <see cref = "EPublicFoo"/> value equivalent
     /// to the string representation, if the parse succeeded, or default(EPublicFoo) if the parse failed.</param>
     /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-    public static bool TryParse(this EPublicFoo enumValue, string value, bool ignoreCase, out EPublicFoo? result)
+    public static bool TryParseFast(this EPublicFoo enumValue, string value, bool ignoreCase, out EPublicFoo? result)
     {
         if (ignoreCase)
         {
