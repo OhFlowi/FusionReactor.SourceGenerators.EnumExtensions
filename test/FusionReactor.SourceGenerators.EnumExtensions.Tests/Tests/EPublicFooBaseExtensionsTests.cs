@@ -126,17 +126,17 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("bar", EPublicFoo.Bar, false)]
     [InlineData("Batz", EPublicFoo.Batz, true)]
     [InlineData("batz", EPublicFoo.Batz, false)]
-    public void ParseValidValuesReturnsCorrectEnumValue(string value, EPublicFoo expected, bool success)
+    public void ParseFastValidValuesReturnsCorrectEnumValue(string value, EPublicFoo expected, bool success)
     {
         if (success)
         {
-            var result = EPublicFooExtensions.Parse(value);
+            var result = EPublicFooExtensions.ParseFast(value);
 
             Assert.Equal(expected, result);
         }
         else
         {
-            Assert.Throws<ArgumentException>(() => EPublicFooExtensions.Parse(value));
+            Assert.Throws<ArgumentException>(() => EPublicFooExtensions.ParseFast(value));
         }
     }
 
@@ -147,9 +147,9 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("BaR", EPublicFoo.Bar)]
     [InlineData("Batz", EPublicFoo.Batz)]
     [InlineData("BATZ", EPublicFoo.Batz)]
-    public void ParseValidValuesIgnoreCaseReturnsCorrectEnumValue(string value, EPublicFoo expected)
+    public void ParseFastValidValuesIgnoreCaseReturnsCorrectEnumValue(string value, EPublicFoo expected)
     {
-        var result = EPublicFooExtensions.Parse(value, ignoreCase: true);
+        var result = EPublicFooExtensions.ParseFast(value, ignoreCase: true);
 
         Assert.Equal(expected, result);
     }
@@ -161,17 +161,17 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("bar", EPublicFoo.Bar, false)]
     [InlineData("Batz", EPublicFoo.Batz, true)]
     [InlineData("batz", EPublicFoo.Batz, false)]
-    public void ThisParseValidValuesReturnsCorrectEnumValue(string value, EPublicFoo expected, bool success)
+    public void ThisParseFastValidValuesReturnsCorrectEnumValue(string value, EPublicFoo expected, bool success)
     {
         if (success)
         {
-            var result = EPublicFoo.Bar.Parse(value);
+            var result = EPublicFoo.Bar.ParseFast(value);
 
             Assert.Equal(expected, result);
         }
         else
         {
-            Assert.Throws<ArgumentException>(() => EPublicFoo.Bar.Parse(value));
+            Assert.Throws<ArgumentException>(() => EPublicFoo.Bar.ParseFast(value));
         }
     }
 
@@ -182,9 +182,9 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("BaR", EPublicFoo.Bar)]
     [InlineData("Batz", EPublicFoo.Batz)]
     [InlineData("BATZ", EPublicFoo.Batz)]
-    public void ThisParseValidValuesIgnoreCaseReturnsCorrectEnumValue(string value, EPublicFoo expected)
+    public void ThisParseFastValidValuesIgnoreCaseReturnsCorrectEnumValue(string value, EPublicFoo expected)
     {
-        var result = EPublicFoo.Bar.Parse(value, ignoreCase: true);
+        var result = EPublicFoo.Bar.ParseFast(value, ignoreCase: true);
 
         Assert.Equal(expected, result);
     }
@@ -193,9 +193,9 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("Foo", EPublicFoo.Foo)]
     [InlineData("foo", EPublicFoo.Foo)]
     [InlineData("FOO", EPublicFoo.Foo)]
-    public void TryParseCaseInsensitiveSuccess(string value, EPublicFoo expected)
+    public void TryParseFastCaseInsensitiveSuccess(string value, EPublicFoo expected)
     {
-        var result = EPublicFooExtensions.TryParse(value, true, out var parsed);
+        var result = EPublicFooExtensions.TryParseFast(value, true, out var parsed);
 
         Assert.True(result);
         Assert.Equal(expected, parsed);
@@ -205,18 +205,18 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("Bar", EPublicFoo.Bar)]
     [InlineData("bar", EPublicFoo.Bar)]
     [InlineData("BAR", EPublicFoo.Bar)]
-    public void TryParseCaseInsensitiveSuccessBar(string value, EPublicFoo expected)
+    public void TryParseFastCaseInsensitiveSuccessBar(string value, EPublicFoo expected)
     {
-        var result = EPublicFooExtensions.TryParse(value, true, out var parsed);
+        var result = EPublicFooExtensions.TryParseFast(value, true, out var parsed);
 
         Assert.True(result);
         Assert.Equal(expected, parsed);
     }
 
     [Fact]
-    public void TryParseCaseInsensitiveFailure()
+    public void TryParseFastCaseInsensitiveFailure()
     {
-        var result = EPublicFooExtensions.TryParse("invalid", true, out var parsed);
+        var result = EPublicFooExtensions.TryParseFast("invalid", true, out var parsed);
 
         Assert.False(result);
         Assert.Equal(default, parsed);
@@ -226,18 +226,18 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("Foo", EPublicFoo.Foo)]
     [InlineData("Bar", EPublicFoo.Bar)]
     [InlineData("Batz", EPublicFoo.Batz)]
-    public void TryParseCaseSensitiveSuccess(string value, EPublicFoo expected)
+    public void TryParseFastCaseSensitiveSuccess(string value, EPublicFoo expected)
     {
-        var result = EPublicFooExtensions.TryParse(value, false, out var parsed);
+        var result = EPublicFooExtensions.TryParseFast(value, false, out var parsed);
 
         Assert.True(result);
         Assert.Equal(expected, parsed);
     }
 
     [Fact]
-    public void TryParseCaseSensitiveFailure()
+    public void TryParseFastCaseSensitiveFailure()
     {
-        var result = EPublicFooExtensions.TryParse("invalid", false, out var parsed);
+        var result = EPublicFooExtensions.TryParseFast("invalid", false, out var parsed);
 
         Assert.False(result);
         Assert.Equal(default, parsed);
@@ -247,9 +247,9 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("Foo", EPublicFoo.Foo)]
     [InlineData("foo", EPublicFoo.Foo)]
     [InlineData("FOO", EPublicFoo.Foo)]
-    public void ThisTryParseCaseInsensitiveSuccess(string value, EPublicFoo expected)
+    public void ThisTryParseFastCaseInsensitiveSuccess(string value, EPublicFoo expected)
     {
-        var result = EPublicFoo.Foo.TryParse(value, true, out var parsed);
+        var result = EPublicFoo.Foo.TryParseFast(value, true, out var parsed);
 
         Assert.True(result);
         Assert.Equal(expected, parsed);
@@ -259,18 +259,18 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("Bar", EPublicFoo.Bar)]
     [InlineData("bar", EPublicFoo.Bar)]
     [InlineData("BAR", EPublicFoo.Bar)]
-    public void ThisTryParseCaseInsensitiveSuccessBar(string value, EPublicFoo expected)
+    public void ThisTryParseFastCaseInsensitiveSuccessBar(string value, EPublicFoo expected)
     {
-        var result = EPublicFoo.Foo.TryParse(value, true, out var parsed);
+        var result = EPublicFoo.Foo.TryParseFast(value, true, out var parsed);
 
         Assert.True(result);
         Assert.Equal(expected, parsed);
     }
 
     [Fact]
-    public void ThisTryParseCaseInsensitiveFailure()
+    public void ThisTryParseFastCaseInsensitiveFailure()
     {
-        var result = EPublicFoo.Foo.TryParse("invalid", true, out var parsed);
+        var result = EPublicFoo.Foo.TryParseFast("invalid", true, out var parsed);
 
         Assert.False(result);
         Assert.Equal(default, parsed);
@@ -280,18 +280,18 @@ public class EPublicFooBaseExtensionsTests
     [InlineData("Foo", EPublicFoo.Foo)]
     [InlineData("Bar", EPublicFoo.Bar)]
     [InlineData("Batz", EPublicFoo.Batz)]
-    public void ThisTryParseCaseSensitiveSuccess(string value, EPublicFoo expected)
+    public void ThisTryParseFastCaseSensitiveSuccess(string value, EPublicFoo expected)
     {
-        var result = EPublicFoo.Foo.TryParse(value, false, out var parsed);
+        var result = EPublicFoo.Foo.TryParseFast(value, false, out var parsed);
 
         Assert.True(result);
         Assert.Equal(expected, parsed);
     }
 
     [Fact]
-    public void ThisTryParseCaseSensitiveFailure()
+    public void ThisTryParseFastCaseSensitiveFailure()
     {
-        var result = EPublicFoo.Foo.TryParse("invalid", false, out var parsed);
+        var result = EPublicFoo.Foo.TryParseFast("invalid", false, out var parsed);
 
         Assert.False(result);
         Assert.Equal(default, parsed);

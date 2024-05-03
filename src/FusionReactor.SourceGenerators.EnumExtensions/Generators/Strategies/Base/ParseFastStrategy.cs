@@ -1,4 +1,4 @@
-// <copyright file="ParseStrategy.cs" company="OhFlowi">
+// <copyright file="ParseFastStrategy.cs" company="OhFlowi">
 // Copyright (c) OhFlowi. All rights reserved.
 // </copyright>
 
@@ -9,12 +9,12 @@ using FusionReactor.SourceGenerators.EnumExtensions.Models;
 using Microsoft.CodeAnalysis;
 
 /// <inheritdoc />
-public class ParseStrategy : IExtensionGeneratorStrategy
+public class ParseFastStrategy : IExtensionGeneratorStrategy
 {
     /// <summary>
-    /// Gets the factory instance of <see cref="ParseStrategy"/>.
+    /// Gets the factory instance of <see cref="ParseFastStrategy"/>.
     /// </summary>
-    public static IExtensionGeneratorStrategy Factory => new ParseStrategy();
+    public static IExtensionGeneratorStrategy Factory => new ParseFastStrategy();
 
     /// <inheritdoc />
     public string GetMethod(IncrementalGeneratorInitializationContext context, EnumDefinition enumDeclarationSyntax)
@@ -50,7 +50,7 @@ public class ParseStrategy : IExtensionGeneratorStrategy
               /// <returns>
               /// The <see cref="{{enumDeclarationSyntax.Name}}"/> value equivalent to the specified string representation.
               /// </returns>
-              public static {{enumDeclarationSyntax.Name}} Parse(string value, bool ignoreCase = false)
+              public static {{enumDeclarationSyntax.Name}} ParseFast(string value, bool ignoreCase = false)
               {
                 if(ignoreCase)
                 {
@@ -82,7 +82,7 @@ public class ParseStrategy : IExtensionGeneratorStrategy
               /// <returns>
               /// The <see cref="{{enumDeclarationSyntax.Name}}"/> value equivalent to the specified string representation.
               /// </returns>
-              public static {{enumDeclarationSyntax.Name}} Parse(this {{enumDeclarationSyntax.Name}} enumValue, string value, bool ignoreCase = false)
+              public static {{enumDeclarationSyntax.Name}} ParseFast(this {{enumDeclarationSyntax.Name}} enumValue, string value, bool ignoreCase = false)
               {
                   if(ignoreCase)
                   {
