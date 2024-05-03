@@ -26,8 +26,8 @@ public static class BaseExtensionGenerator
         GetValuesStrategy.Factory,
 
         // HasFlagFastStrategy.Factory,
-        ParseStrategy.Factory,
-        TryParseStrategy.Factory,
+        ParseFastStrategy.Factory,
+        TryParseFastStrategy.Factory,
     ];
 
     /// <summary>

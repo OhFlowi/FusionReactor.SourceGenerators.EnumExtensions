@@ -1,4 +1,4 @@
-// <copyright file="TryParseStrategy.cs" company="OhFlowi">
+// <copyright file="TryParseFastStrategy.cs" company="OhFlowi">
 // Copyright (c) OhFlowi. All rights reserved.
 // </copyright>
 
@@ -9,12 +9,12 @@ using FusionReactor.SourceGenerators.EnumExtensions.Models;
 using Microsoft.CodeAnalysis;
 
 /// <inheritdoc />
-public class TryParseStrategy : IExtensionGeneratorStrategy
+public class TryParseFastStrategy : IExtensionGeneratorStrategy
 {
     /// <summary>
-    /// Gets the factory instance of <see cref="TryParseStrategy"/>.
+    /// Gets the factory instance of <see cref="TryParseFastStrategy"/>.
     /// </summary>
-    public static IExtensionGeneratorStrategy Factory => new TryParseStrategy();
+    public static IExtensionGeneratorStrategy Factory => new TryParseFastStrategy();
 
     /// <inheritdoc />
     public string GetMethod(IncrementalGeneratorInitializationContext context, EnumDefinition enumDeclarationSyntax)
@@ -48,9 +48,9 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
               /// When this method returns, contains the <see cref="{{enumDeclarationSyntax.Name}}"/> value equivalent
               /// to the string representation, if the parse succeeded, or default({{enumDeclarationSyntax.Name}}) if the parse failed.</param>
               /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-              public static bool TryParse(string value, out {{enumDeclarationSyntax.Name}}? result)
+              public static bool TryParseFast(string value, out {{enumDeclarationSyntax.Name}}? result)
               {
-                return TryParse(value, false, out result);
+                return TryParseFast(value, false, out result);
               }
 
               /// <summary>
@@ -63,7 +63,7 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
               /// When this method returns, contains the <see cref="{{enumDeclarationSyntax.Name}}"/> value equivalent
               /// to the string representation, if the parse succeeded, or default({{enumDeclarationSyntax.Name}}) if the parse failed.</param>
               /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-              public static bool TryParse(string value, bool ignoreCase, out {{enumDeclarationSyntax.Name}}? result)
+              public static bool TryParseFast(string value, bool ignoreCase, out {{enumDeclarationSyntax.Name}}? result)
               {
                 if(ignoreCase)
                   {
@@ -95,9 +95,9 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
               /// When this method returns, contains the <see cref="{{enumDeclarationSyntax.Name}}"/> value equivalent
               /// to the string representation, if the parse succeeded, or default({{enumDeclarationSyntax.Name}}) if the parse failed.</param>
               /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-              public static bool TryParse(this {{enumDeclarationSyntax.Name}} enumValue, string value, out {{enumDeclarationSyntax.Name}}? result)
+              public static bool TryParseFast(this {{enumDeclarationSyntax.Name}} enumValue, string value, out {{enumDeclarationSyntax.Name}}? result)
               {
-                return TryParse(value, false, out result);
+                return TryParseFast(value, false, out result);
               }
 
               /// <summary>
@@ -111,7 +111,7 @@ public class TryParseStrategy : IExtensionGeneratorStrategy
               /// When this method returns, contains the <see cref="{{enumDeclarationSyntax.Name}}"/> value equivalent
               /// to the string representation, if the parse succeeded, or default({{enumDeclarationSyntax.Name}}) if the parse failed.</param>
               /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
-              public static bool TryParse(this {{enumDeclarationSyntax.Name}} enumValue, string value, bool ignoreCase, out {{enumDeclarationSyntax.Name}}? result)
+              public static bool TryParseFast(this {{enumDeclarationSyntax.Name}} enumValue, string value, bool ignoreCase, out {{enumDeclarationSyntax.Name}}? result)
               {
                 if(ignoreCase)
                   {
