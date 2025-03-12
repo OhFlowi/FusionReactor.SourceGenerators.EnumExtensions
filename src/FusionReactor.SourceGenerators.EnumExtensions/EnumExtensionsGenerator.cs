@@ -1,14 +1,13 @@
-﻿// <copyright file="EnumExtensionsGenerator.cs" company="OhFlowi">
+// <copyright file="EnumExtensionsGenerator.cs" company="OhFlowi">
 // Copyright (c) OhFlowi. All rights reserved.
 // </copyright>
 
 namespace FusionReactor.SourceGenerators.EnumExtensions;
 
+using System.CodeDom.Compiler;
 using System.Text;
 using FusionReactor.SourceGenerators.EnumExtensions.Constants;
-using FusionReactor.SourceGenerators.EnumExtensions.Extensions;
-using FusionReactor.SourceGenerators.EnumExtensions.Generators;
-using FusionReactor.SourceGenerators.EnumExtensions.Models;
+using FusionReactor.SourceGenerators.EnumExtensions.Parts;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
@@ -20,67 +19,81 @@ public class EnumExtensionsGenerator : IIncrementalGenerator
     /// <inheritdoc />
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        context.AddGenerateEnumExtensionsAttribute();
-        context.AddDisplayResult();
+        context.RegisterPostInitializationOutput(static x =>
+            x.AddSource(
+                AttributeConstants.Name + ".g.cs",
+                SourceText.From(
+                    AttributeConstants.Content,
+                    Encoding.UTF8)));
 
-        var enums = context
-            .SyntaxProvider
-            .ForAttributeWithMetadataName(
-                "FusionReactor.SourceGenerators.EnumExtensions." + GenerateEnumExtensionsAttributeConstants.Name + "Attribute",
-                predicate: (node, _) => node is EnumDeclarationSyntax,
-                transform: static (ctx, _)
-                    => GetEnumDefinition(ctx.SemanticModel, ctx.TargetNode))
-            .Where(static x => x is not null);
+        var pipeline = context.SyntaxProvider.ForAttributeWithMetadataName(
+            fullyQualifiedMetadataName: AttributeConstants.FullName,
+            predicate: static (
+                syntaxNode,
+                _) => syntaxNode is EnumDeclarationSyntax,
+            transform: static (
+                    context,
+                    cancellationToken)
+                => (INamedTypeSymbol?)context
+                    .SemanticModel
+                    .GetDeclaredSymbol(
+                        context.TargetNode,
+                        cancellationToken));
 
         context.RegisterSourceOutput(
-            enums,
-            (productionContext, node) =>
+            pipeline,
+            (
+                productionContext,
+                symbol) =>
             {
-                if (node is null)
+                if (symbol is null)
                 {
                     return;
                 }
 
                 productionContext.AddSource(
-                    node.Value.Name + "Extensions.Base.g.cs",
-                    SourceText.From(BaseExtensionGenerator.Generate(context, node.Value), Encoding.UTF8));
-
-                productionContext.AddSource(
-                    node.Value.Name + "Extensions.DisplayAttribute.g.cs",
-                    SourceText.From(DisplayAttributeExtensionGenerator.Generate(context, node.Value), Encoding.UTF8));
+                    $"{symbol.Name}.Extensions.g.cs",
+                    SourceText.From(
+                        BuildEnumExtensions(symbol),
+                        Encoding.UTF8));
             });
     }
 
-    private static EnumDefinition? GetEnumDefinition(SemanticModel semanticModel, SyntaxNode enumDeclarationSyntax)
+    private static string BuildEnumExtensions(INamedTypeSymbol symbol)
     {
-        if (semanticModel.GetDeclaredSymbol(enumDeclarationSyntax) is not INamedTypeSymbol enumSymbol)
-        {
-            return null;
-        }
+        using var stringWriter = new StringWriter();
+        using var textWriter = new IndentedTextWriter(stringWriter);
 
-        var enumMembers = enumSymbol.GetMembers();
+        textWriter.Indent = 0;
 
-        var members = new List<EnumMember>(enumMembers.Length);
+        EnumExtensionPart.WriteHeader(symbol, textWriter);
 
-        members.AddRange(
-            enumMembers
-                .Where(member => member is IFieldSymbol { ConstantValue: not null })
-                .Cast<IFieldSymbol>()
-                .Select(enumMember => new EnumMember
-                {
-                    Name = enumMember.Name,
-                    Value = enumMember.ConstantValue?.ToString() ?? string.Empty,
-                    Attributes = enumMember.GetAttributes(),
-                }));
+        ContentPart.WriteField(symbol, textWriter);
+        textWriter.WriteLine();
+        NamesPart.WriteField(symbol, textWriter);
+        textWriter.WriteLine();
+        ValuesPart.WriteField(symbol, textWriter);
+        textWriter.WriteLine();
+        EnumRootAttributesPart.WriteField(symbol, textWriter);
+        textWriter.WriteLine();
+        EnumMemberAttributesPart.WriteField(symbol, textWriter);
+        textWriter.WriteLine();
+        ContentPart.WriteMethods(symbol, textWriter);
+        textWriter.WriteLine();
+        NamesPart.WriteMethods(symbol, textWriter);
+        textWriter.WriteLine();
+        ValuesPart.WriteMethods(symbol, textWriter);
+        textWriter.WriteLine();
+        ParsePart.WriteMethods(symbol, textWriter);
+        textWriter.WriteLine();
+        TryParsePart.WriteMethods(symbol, textWriter);
+        textWriter.WriteLine();
+        EnumRootAttributesPart.WriteMethods(symbol, textWriter);
+        textWriter.WriteLine();
+        EnumMemberAttributesPart.WriteMethods(symbol, textWriter);
 
-        return new EnumDefinition
-        {
-            Namespace = enumSymbol.ContainingNamespace.FullNamespace(),
-            Access = enumSymbol.DeclaredAccessibility.ToString().ToLowerInvariant(),
-            Name = enumSymbol.Name,
-            UnderlyingType = enumSymbol.EnumUnderlyingType?.Name ?? "int",
-            HasFlags = enumSymbol.GetAttributes().Any(x => x.AttributeClass is { Name: nameof(FlagsAttribute) }),
-            Members = members,
-        };
+        EnumExtensionPart.WriteFooter(textWriter);
+
+        return stringWriter.ToString();
     }
 }

@@ -1,7 +1,17 @@
-﻿namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
+﻿// ReSharper disable UseCollectionExpression
+#pragma warning disable CA1515
+#pragma warning disable IDE0300
+
+namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
+
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes;
 
 [GenerateEnumExtensions]
+[Description("Test 123")]
+[IntArray(new[] { 123 })]
+[StringArray(new[] { "Foo", "Bar", "Baz" })]
 public enum EPublicFoo
 {
     [Display(
