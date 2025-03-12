@@ -1,8 +1,12 @@
 namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
+
 using System.Collections.Frozen;
+using System.ComponentModel;
+using FusionReactor.SourceGenerators.EnumExtensions.Constants;
+using FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes;
 using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
-public class EPublicFooBaseExtensionsTests
+public class EPublicFooExtensionsTests
 {
     private static readonly IReadOnlyDictionary<EPublicFoo, int> ExpectedContent
         = new Dictionary<EPublicFoo, int>
@@ -92,32 +96,6 @@ public class EPublicFooBaseExtensionsTests
         Assert.NotEmpty(values);
         Assert.Equal(ExpectedValues, values);
     }
-
-    /*
-    [Theory]
-    [InlineData(EPublicFoo.Foo, EPublicFoo.Foo, true)]
-    [InlineData(EPublicFoo.Foo, EPublicFoo.Bar, false)]
-    [InlineData(EPublicFoo.Bar, EPublicFoo.Bar, true)]
-    [InlineData(EPublicFoo.Bar, EPublicFoo.Foo, false)]
-    [InlineData(EPublicFoo.Bar, EPublicFoo.Batz, false)]
-    public void HasFlagFastReturnsCorrectValue(EPublicFoo enumValue, EPublicFoo flag, bool expectedResult)
-    {
-        var result = enumValue.HasFlagFast(flag);
-
-        Assert.Equal(expectedResult, result);
-    }
-
-    [Theory]
-    [InlineData(EPublicFoo.Foo | EPublicFoo.Bar, EPublicFoo.Foo, true)]
-    [InlineData(EPublicFoo.Foo | EPublicFoo.Bar, EPublicFoo.Bar, true)]
-    [InlineData(EPublicFoo.Foo | EPublicFoo.Bar, EPublicFoo.Batz, false)]
-    public void HasFlagFastReturnsCorrectValueFlagValues(EPublicFoo enumValue, EPublicFoo flag, bool expectedResult)
-    {
-        var result = enumValue.HasFlagFast(flag);
-
-        Assert.Equal(expectedResult, result);
-    }
-    */
 
     [Theory]
     [InlineData("Foo", EPublicFoo.Foo, true)]
@@ -295,5 +273,53 @@ public class EPublicFooBaseExtensionsTests
 
         Assert.False(result);
         Assert.Equal(default, parsed);
+    }
+
+    [Fact]
+    public void GetRootAttributes()
+    {
+        var result = EPublicFooExtensions.GetRootAttributes();
+
+        Assert.Equal(4, result.Count);
+        Assert.Equal(1, result.Count(x => x.GetType().Name == AttributeConstants.Name));
+        Assert.Equal(1, result.Count(x => x is DescriptionAttribute));
+        Assert.Equal(1, result.Count(x => x is IntArrayAttribute));
+        Assert.Equal(1, result.Count(x => x is StringArrayAttribute));
+    }
+
+    [Fact]
+    public void ThisGetRootAttributes()
+    {
+        var result = EPublicFoo.Foo.GetRootAttributes();
+
+        Assert.Equal(4, result.Count);
+        Assert.Equal(1, result.Count(x => x.GetType().Name == AttributeConstants.Name));
+        Assert.Equal(1, result.Count(x => x is DescriptionAttribute));
+        Assert.Equal(1, result.Count(x => x is IntArrayAttribute));
+        Assert.Equal(1, result.Count(x => x is StringArrayAttribute));
+    }
+
+    [Theory]
+    [InlineData(EPublicFoo.Foo, 1)]
+    [InlineData(EPublicFoo.Bar, 1)]
+    [InlineData(EPublicFoo.Batz, 0)]
+    public void GetMemberAttributes(EPublicFoo value, int count)
+    {
+        var result = EPublicFooExtensions.GetMemberAttributes()[value];
+
+        Assert.Equal(3, EPublicFooExtensions.GetMemberAttributes().Count);
+        Assert.Equal(count, result.Length);
+    }
+
+    [Theory]
+    [InlineData(EPublicFoo.Foo, 1)]
+    [InlineData(EPublicFoo.Bar, 1)]
+    [InlineData(EPublicFoo.Batz, 0)]
+    public void ThisGetMemberAttributes(EPublicFoo value, int count)
+    {
+        var result = EPublicFoo.Foo.GetMemberAttributes()[value];
+
+        Assert.Equal(3, EPublicFoo.Foo.GetMemberAttributes().Count);
+        Assert.Equal(count, result.Length);
     }
 }
