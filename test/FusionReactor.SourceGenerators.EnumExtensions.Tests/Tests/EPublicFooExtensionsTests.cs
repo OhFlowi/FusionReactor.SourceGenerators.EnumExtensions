@@ -2,7 +2,6 @@ namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Tests;
 
 using System.Collections.Frozen;
 using System.ComponentModel;
-using FusionReactor.SourceGenerators.EnumExtensions.Constants;
 using FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes;
 using FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
@@ -281,7 +280,7 @@ public class EPublicFooExtensionsTests
         var result = EPublicFooExtensions.GetRootAttributes();
 
         Assert.Equal(4, result.Count);
-        Assert.Equal(1, result.Count(x => x.GetType().Name == AttributeConstants.Name));
+        Assert.Equal(1, result.Count(x => x.GetType().Name == nameof(GenerateEnumExtensionsAttribute)));
         Assert.Equal(1, result.Count(x => x is DescriptionAttribute));
         Assert.Equal(1, result.Count(x => x is IntArrayAttribute));
         Assert.Equal(1, result.Count(x => x is StringArrayAttribute));
@@ -293,7 +292,7 @@ public class EPublicFooExtensionsTests
         var result = EPublicFoo.Foo.GetRootAttributes();
 
         Assert.Equal(4, result.Count);
-        Assert.Equal(1, result.Count(x => x.GetType().Name == AttributeConstants.Name));
+        Assert.Equal(1, result.Count(x => x.GetType().Name == nameof(GenerateEnumExtensionsAttribute)));
         Assert.Equal(1, result.Count(x => x is DescriptionAttribute));
         Assert.Equal(1, result.Count(x => x is IntArrayAttribute));
         Assert.Equal(1, result.Count(x => x is StringArrayAttribute));
