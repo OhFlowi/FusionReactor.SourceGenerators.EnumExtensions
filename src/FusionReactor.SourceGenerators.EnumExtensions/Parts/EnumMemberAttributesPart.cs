@@ -1,4 +1,4 @@
-﻿// <copyright file="EnumMemberAttributesPart.cs" company="OhFlowi">
+// <copyright file="EnumMemberAttributesPart.cs" company="OhFlowi">
 // Copyright (c) OhFlowi. All rights reserved.
 // </copyright>
 
@@ -18,7 +18,9 @@ public static class EnumMemberAttributesPart
     /// </summary>
     /// <param name="symbol">TODO: 1.</param>
     /// <param name="writer">TODO: 2.</param>
-    public static void WriteField(INamedTypeSymbol symbol, IndentedTextWriter writer)
+    public static void WriteField(
+        INamedTypeSymbol symbol,
+        IndentedTextWriter writer)
     {
         if (writer == null)
         {
@@ -40,11 +42,17 @@ public static class EnumMemberAttributesPart
 
         writer.WriteLineNoTabs("#if NET8_0_OR_GREATER");
 
-        WriteFieldNet8(symbol, data, writer);
+        WriteFieldNet8(
+            symbol,
+            data,
+            writer);
 
         writer.WriteLineNoTabs("#else");
 
-        WriteFieldDefault(symbol, data, writer);
+        WriteFieldDefault(
+            symbol,
+            data,
+            writer);
 
         writer.WriteLineNoTabs("#endif");
 
@@ -56,7 +64,9 @@ public static class EnumMemberAttributesPart
     /// </summary>
     /// <param name="symbol">TODO: 1.</param>
     /// <param name="writer">TODO: 2.</param>
-    public static void WriteMethods(INamedTypeSymbol symbol, IndentedTextWriter writer)
+    public static void WriteMethods(
+        INamedTypeSymbol symbol,
+        IndentedTextWriter writer)
     {
         if (writer == null)
         {
@@ -70,9 +80,155 @@ public static class EnumMemberAttributesPart
 
         writer.Indent++;
 
-        WriteGetEnumAttributes(symbol, writer);
+        WriteGetEnumAttributes(
+            symbol,
+            writer);
         writer.WriteLine();
-        WriteGetEnumAttributesExtension(symbol, writer);
+        WriteGetEnumAttributesExtension(
+            symbol,
+            writer);
+
+        writer.Indent--;
+    }
+
+    /// <summary>
+    /// TODO:.
+    /// </summary>
+    /// <param name="symbol">TODO: 1.</param>
+    /// <param name="writer">TODO: 2.</param>
+    public static void WriteClass(
+        INamedTypeSymbol symbol,
+        IndentedTextWriter writer)
+    {
+        if (writer == null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
+
+        if (symbol == null)
+        {
+            throw new ArgumentNullException(nameof(symbol));
+        }
+
+        var members = symbol
+            .GetMembers()
+            .Where(member => member is IFieldSymbol { ConstantValue: not null })
+            .Cast<IFieldSymbol>()
+            .ToArray();
+
+        writer.Indent++;
+
+        writer.WriteLine("/// <summary>");
+        writer.WriteLine("/// The existing member attributes.");
+        writer.WriteLine("/// </summary>");
+        writer.WriteLine("public static class Member");
+        writer.WriteLine("{");
+
+        writer.Indent++;
+
+        for (var index = 0; index < members.Length; index++)
+        {
+            if (index > 0)
+            {
+                writer.WriteLine();
+            }
+
+            writer.WriteLine("/// <summary>");
+            writer.WriteLine("/// The existing member attributes.");
+            writer.WriteLine("/// </summary>");
+            writer.WriteLine(
+                "public static class {0}",
+                members[index].Name);
+            writer.WriteLine("{");
+
+            writer.Indent++;
+
+            var data = members[index]
+                .GetAttributes()
+                .ToArray();
+
+            for (var i = 0; i < data.Length; i++)
+            {
+                if (i > 0)
+                {
+                    writer.WriteLine();
+                }
+
+                var name = data[i].AttributeClass!.Name.TrimEnd("Attribute");
+
+                var matches = data
+                    .Where(x =>
+                        x.AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ==
+                        data[i].AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .ToArray();
+
+                if (matches.Length > 1)
+                {
+                    name = $"{name}_{Array.IndexOf(matches, data[i])}";
+                }
+
+                writer.WriteLine("/// <summary>");
+                writer.WriteLine(
+                    "/// Attributes for <see cref=\"{0}\" />",
+                    data[i].AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+                writer.WriteLine("/// </summary>");
+                writer.WriteLine(
+                    "{0} static {1} {2}",
+                    data[i].AttributeClass!.DeclaredAccessibility.ToString().ToLowerInvariant(),
+                    data[i].AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                    name);
+
+                writer.Indent++;
+
+                writer.WriteLine("=>");
+
+                writer.Indent++;
+
+                if (data[i].ConstructorArguments.Length > 0)
+                {
+                    writer.WriteLine(
+                        @"new {0}(",
+                        data[i].AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+
+                    writer.WriteAttributeConstructorArguments(
+                        data[i],
+                        ";");
+
+                    if (data[i].NamedArguments.Length > 0)
+                    {
+                        writer.WriteAttributeNamedArguments(
+                            data[i],
+                            ";");
+                    }
+                }
+                else
+                {
+                    writer.WriteLine(
+                        @"new {0}(){1}",
+                        data[i].AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                        data[i].NamedArguments.Length == 0 ? ';' : string.Empty);
+
+                    if (data[i].NamedArguments.Length > 0)
+                    {
+                        writer.WriteAttributeNamedArguments(
+                            data[i],
+                            ";");
+                    }
+                }
+
+                writer.Indent--;
+
+                writer.Indent--;
+            }
+
+            writer.Indent--;
+
+            writer.WriteLine("}");
+        }
+
+        writer.Indent--;
+
+        writer.WriteLine("}");
 
         writer.Indent--;
     }
@@ -129,7 +285,9 @@ public static class EnumMemberAttributesPart
     {
         writer.Indent++;
 
-        writer.WriteLine("= new Dictionary<{0}, Attribute[]>()", symbol.Name);
+        writer.WriteLine(
+            "= new Dictionary<{0}, Attribute[]>()",
+            symbol.Name);
 
         writer.WriteLine("{");
         writer.Indent++;
@@ -147,7 +305,9 @@ public static class EnumMemberAttributesPart
 
             var attributes = line.GetAttributes();
 
-            writer.WriteLine("new Attribute[{0}]", attributes.Length);
+            writer.WriteLine(
+                "new Attribute[{0}]",
+                attributes.Length);
 
             if (attributes.Length > 0)
             {
@@ -208,7 +368,9 @@ public static class EnumMemberAttributesPart
         writer.Indent--;
     }
 
-    private static void WriteGetEnumAttributesExtension(INamedTypeSymbol symbol, IndentedTextWriter writer)
+    private static void WriteGetEnumAttributesExtension(
+        INamedTypeSymbol symbol,
+        IndentedTextWriter writer)
     {
         writer.WriteLine("/// <summary>");
         writer.WriteLine(

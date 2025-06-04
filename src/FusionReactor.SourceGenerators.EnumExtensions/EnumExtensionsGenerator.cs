@@ -110,6 +110,18 @@ public class EnumExtensionsGenerator : IIncrementalGenerator
             symbol,
             textWriter);
 
+        textWriter.WriteLine();
+
+        EnumRootAttributesPart.WriteClass(
+            symbol,
+            textWriter);
+
+        textWriter.WriteLine();
+
+        EnumMemberAttributesPart.WriteClass(
+            symbol,
+            textWriter);
+
         EnumExtensionPart.WriteFooter(textWriter);
 
         return stringWriter.ToString();

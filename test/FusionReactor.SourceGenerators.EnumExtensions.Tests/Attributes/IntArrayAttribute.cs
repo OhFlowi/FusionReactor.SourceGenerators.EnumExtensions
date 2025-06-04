@@ -3,7 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 /// <inheritdoc />
-[AttributeUsage(AttributeTargets.Enum)]
+[AttributeUsage(AttributeTargets.Enum, AllowMultiple = true)]
 [SuppressMessage("Style", "IDE0290:Primären Konstruktor verwenden", Justification = "Reviewed.")]
 internal sealed class IntArrayAttribute : Attribute
 {
