@@ -279,10 +279,10 @@ public class EPublicFooExtensionsTests
     {
         var result = EPublicFooExtensions.GetRootAttributes();
 
-        Assert.Equal(4, result.Count);
+        Assert.Equal(5, result.Count);
         Assert.Equal(1, result.Count(x => x.GetType().Name == nameof(GenerateEnumExtensionsAttribute)));
         Assert.Equal(1, result.Count(x => x is DescriptionAttribute));
-        Assert.Equal(1, result.Count(x => x is IntArrayAttribute));
+        Assert.Equal(2, result.Count(x => x is IntArrayAttribute));
         Assert.Equal(1, result.Count(x => x is StringArrayAttribute));
     }
 
@@ -291,15 +291,15 @@ public class EPublicFooExtensionsTests
     {
         var result = EPublicFoo.Foo.GetRootAttributes();
 
-        Assert.Equal(4, result.Count);
+        Assert.Equal(5, result.Count);
         Assert.Equal(1, result.Count(x => x.GetType().Name == nameof(GenerateEnumExtensionsAttribute)));
         Assert.Equal(1, result.Count(x => x is DescriptionAttribute));
-        Assert.Equal(1, result.Count(x => x is IntArrayAttribute));
+        Assert.Equal(2, result.Count(x => x is IntArrayAttribute));
         Assert.Equal(1, result.Count(x => x is StringArrayAttribute));
     }
 
     [Theory]
-    [InlineData(EPublicFoo.Foo, 1)]
+    [InlineData(EPublicFoo.Foo, 2)]
     [InlineData(EPublicFoo.Bar, 1)]
     [InlineData(EPublicFoo.Batz, 0)]
     public void GetMemberAttributes(EPublicFoo value, int count)
@@ -311,7 +311,7 @@ public class EPublicFooExtensionsTests
     }
 
     [Theory]
-    [InlineData(EPublicFoo.Foo, 1)]
+    [InlineData(EPublicFoo.Foo, 2)]
     [InlineData(EPublicFoo.Bar, 1)]
     [InlineData(EPublicFoo.Batz, 0)]
     public void ThisGetMemberAttributes(EPublicFoo value, int count)
