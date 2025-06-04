@@ -6,14 +6,17 @@ namespace FusionReactor.SourceGenerators.EnumExtensions.Tests.Enums;
 
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes;
 
 [GenerateEnumExtensions]
 [Description("Test 123")]
 [IntArray(new[] { 123 })]
+[IntArray(new[] { 456 })]
 [StringArray(new[] { "Foo", "Bar", "Baz" })]
 public enum EPublicFoo
 {
+    [EnumMember]
     [Display(
         ShortName = "Fo",
         Name = "Foo - 0",

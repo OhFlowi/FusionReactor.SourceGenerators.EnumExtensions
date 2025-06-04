@@ -1,4 +1,4 @@
-﻿// <copyright file="WriteAttributeExtension.cs" company="OhFlowi">
+// <copyright file="WriteAttributeExtension.cs" company="OhFlowi">
 // Copyright (c) OhFlowi. All rights reserved.
 // </copyright>
 
@@ -19,9 +19,11 @@ public static class WriteAttributeExtension
     /// </summary>
     /// <param name="writer">The <see cref="IndentedTextWriter"/> to write to.</param>
     /// <param name="attribute">The <see cref="AttributeData"/> representing the attribute to write.</param>
+    /// <param name="finishWith">.</param>
     public static void WriteAttribute(
         this IndentedTextWriter writer,
-        AttributeData attribute)
+        AttributeData attribute,
+        string finishWith = ",")
     {
         if (writer == null)
         {
@@ -39,11 +41,13 @@ public static class WriteAttributeExtension
                 @"new {0}(",
                 attribute.AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
-            WriteAttributeConstructorArguments(writer, attribute);
+            writer.WriteAttributeConstructorArguments(
+                attribute,
+                finishWith);
 
             if (attribute.NamedArguments.Length > 0)
             {
-                WriteAttributeNamedArguments(writer, attribute);
+                writer.WriteAttributeNamedArguments(attribute);
             }
         }
         else
@@ -55,15 +59,32 @@ public static class WriteAttributeExtension
 
             if (attribute.NamedArguments.Length > 0)
             {
-                WriteAttributeNamedArguments(writer, attribute);
+                writer.WriteAttributeNamedArguments(attribute);
             }
         }
     }
 
-    private static void WriteAttributeConstructorArguments(
-        IndentedTextWriter writer,
-        AttributeData attribute)
+    /// <summary>
+    /// Writes an attribute to the indented text writer.
+    /// </summary>
+    /// <param name="writer">The <see cref="IndentedTextWriter"/> to write to.</param>
+    /// <param name="attribute">The <see cref="AttributeData"/> representing the attribute to write.</param>
+    /// <param name="finishWith">.</param>
+    public static void WriteAttributeConstructorArguments(
+        this IndentedTextWriter writer,
+        AttributeData attribute,
+        string finishWith = ",")
     {
+        if (writer == null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
+
+        if (attribute?.AttributeClass is null)
+        {
+            return;
+        }
+
         writer.Indent++;
 
         var argumentData = attribute
@@ -91,11 +112,15 @@ public static class WriteAttributeExtension
 
                 if (x.Type.ToDisplayString() == "string[]")
                 {
-                    values = "{ " + string.Join(", ", x.Values.Select(y => $"\"{y.Value}\"")) + " }";
+                    values = "{ " + string.Join(
+                        ", ",
+                        x.Values.Select(y => $"\"{y.Value}\"")) + " }";
                 }
                 else
                 {
-                    values = "{ " + string.Join(", ", x.Values.Select(y => $"{y.Value}")) + " }";
+                    values = "{ " + string.Join(
+                        ", ",
+                        x.Values.Select(y => $"{y.Value}")) + " }";
                 }
 
                 return
@@ -110,16 +135,33 @@ public static class WriteAttributeExtension
                     ? "{0}){1}"
                     : "{0},",
                 constructorArgument,
-                attribute.NamedArguments.Length == 0 ? ',' : string.Empty);
+                attribute.NamedArguments.Length == 0 ? finishWith : string.Empty);
         }
 
         writer.Indent--;
     }
 
-    private static void WriteAttributeNamedArguments(
-        IndentedTextWriter writer,
-        AttributeData attribute)
+    /// <summary>
+    /// Writes an attribute to the indented text writer.
+    /// </summary>
+    /// <param name="writer">The <see cref="IndentedTextWriter"/> to write to.</param>
+    /// <param name="attribute">The <see cref="AttributeData"/> representing the attribute to write.</param>
+    /// <param name="finishWith">.</param>
+    public static void WriteAttributeNamedArguments(
+        this IndentedTextWriter writer,
+        AttributeData attribute,
+        string finishWith = ",")
     {
+        if (writer == null)
+        {
+            throw new ArgumentNullException(nameof(writer));
+        }
+
+        if (attribute?.AttributeClass is null)
+        {
+            return;
+        }
+
         writer.WriteLine("{");
 
         writer.Indent++;
@@ -143,6 +185,8 @@ public static class WriteAttributeExtension
 
         writer.Indent--;
 
-        writer.WriteLine("},");
+        writer.WriteLine(
+            "}}{0}",
+            finishWith);
     }
 }

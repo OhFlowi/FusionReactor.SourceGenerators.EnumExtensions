@@ -29,6 +29,7 @@ To use the generator, add the `[GenerateEnumExtensions]` attribute to an enum. F
 [GenerateEnumExtensions]
 [Description("Test 123")]
 [IntArray(new[] { 123 })]
+[IntArray(new[] { 456 })]
 [StringArray(new[] { "Foo", "Bar", "Baz" })]
 public enum EPublicFoo
 {
@@ -151,6 +152,8 @@ public static class EPublicFooExtensions
                 "Test 123"),
             new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
                 new int[]{ 123 }),
+            new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
+                new int[]{ 456 }),
             new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.StringArrayAttribute(
                 new string[]{ "Foo", "Bar", "Baz" }),
         }
@@ -164,6 +167,8 @@ public static class EPublicFooExtensions
                 "Test 123"),
             new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
                 new int[]{ 123 }),
+            new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
+                new int[]{ 456 }),
             new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.StringArrayAttribute(
                 new string[]{ "Foo", "Bar", "Baz" }),
         };
@@ -176,6 +181,8 @@ public static class EPublicFooExtensions
                 "Test 123"),
             new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
                 new int[]{ 123 }),
+            new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
+                new int[]{ 456 }),
             new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.StringArrayAttribute(
                 new string[]{ "Foo", "Bar", "Baz" }),
         };
@@ -584,6 +591,113 @@ public static class EPublicFooExtensions
     public static Dictionary<EPublicFoo, Attribute[]> GetMemberAttributes(this EPublicFoo enumValue)
 #endif
         => memberAttributes;
+		
+	/// <summary>
+	/// The existing root attributes.
+	/// </summary>
+	public static class Root
+	{
+		/// <summary>
+		/// Attributes for <see cref="global::FusionReactor.SourceGenerators.EnumExtensions.GenerateEnumExtensionsAttribute" />
+		/// </summary>
+		public static global::FusionReactor.SourceGenerators.EnumExtensions.GenerateEnumExtensionsAttribute GenerateEnumExtensions
+			=>
+				new global::FusionReactor.SourceGenerators.EnumExtensions.GenerateEnumExtensionsAttribute();
+		
+		/// <summary>
+		/// Attributes for <see cref="global::System.ComponentModel.DescriptionAttribute" />
+		/// </summary>
+		public static global::System.ComponentModel.DescriptionAttribute Description
+			=>
+				new global::System.ComponentModel.DescriptionAttribute(
+					"Test 123");
+		
+		/// <summary>
+		/// Attributes for <see cref="global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute" />
+		/// </summary>
+		internal static global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute IntArray_0
+			=>
+				new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
+					new int[]{ 123 });
+		
+		/// <summary>
+		/// Attributes for <see cref="global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute" />
+		/// </summary>
+		internal static global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute IntArray_1
+			=>
+				new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.IntArrayAttribute(
+					new int[]{ 456 });
+		
+		/// <summary>
+		/// Attributes for <see cref="global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.StringArrayAttribute" />
+		/// </summary>
+		internal static global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.StringArrayAttribute StringArray
+			=>
+				new global::FusionReactor.SourceGenerators.EnumExtensions.Tests.Attributes.StringArrayAttribute(
+					new string[]{ "Foo", "Bar", "Baz" });
+	}
+
+	/// <summary>
+	/// The existing member attributes.
+	/// </summary>
+	public static class Member
+	{
+		/// <summary>
+		/// The existing member attributes.
+		/// </summary>
+		public static class Foo
+		{
+			/// <summary>
+			/// Attributes for <see cref="global::System.Runtime.Serialization.EnumMemberAttribute" />
+			/// </summary>
+			public static global::System.Runtime.Serialization.EnumMemberAttribute EnumMember
+				=>
+					new global::System.Runtime.Serialization.EnumMemberAttribute();
+			
+			/// <summary>
+			/// Attributes for <see cref="global::System.ComponentModel.DataAnnotations.DisplayAttribute" />
+			/// </summary>
+			public static global::System.ComponentModel.DataAnnotations.DisplayAttribute Display
+				=>
+					new global::System.ComponentModel.DataAnnotations.DisplayAttribute()
+					{
+						ShortName = "Fo",
+						Name = "Foo - 0",
+						Description = "Zero",
+						Prompt = "ooF",
+						GroupName = "Foos",
+						Order = 0,
+					};
+		}
+		
+		/// <summary>
+		/// The existing member attributes.
+		/// </summary>
+		public static class Bar
+		{
+			/// <summary>
+			/// Attributes for <see cref="global::System.ComponentModel.DataAnnotations.DisplayAttribute" />
+			/// </summary>
+			public static global::System.ComponentModel.DataAnnotations.DisplayAttribute Display
+				=>
+					new global::System.ComponentModel.DataAnnotations.DisplayAttribute()
+					{
+						ShortName = "Ba",
+						Name = "Bar - 1",
+						Description = "One",
+						Prompt = "raB",
+						GroupName = "Bars",
+						Order = 1,
+					};
+		}
+		
+		/// <summary>
+		/// The existing member attributes.
+		/// </summary>
+		public static class Batz
+		{
+		}
+	}
 }
 
 ```
